@@ -2,35 +2,38 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    public float tileWidth = 1.28f;  // 对应像素 128
-    public float tileHeight = 0.64f; // 对应像素 64
-    public int width = 36;
-    public int height = 36;
+    // 对应你的像素 128x64，保持 2:1 比例
+    public float tileWidth = 2.12f;
+    public float tileHeight = 1f;
 
-    // 获取点击位置对应的网格坐标
+    // 获取点击位置对应的网格坐标 (世界坐标 -> 整数格索引)
     public Vector2Int WorldToIsoGrid(Vector3 worldPos)
     {
-        // 这里的 worldPos 是鼠标点击的 Unity 世界坐标
-        float x = worldPos.x / tileWidth;
-        float y = worldPos.y / tileHeight;
+        // 核心公式：等距旋转与缩放的逆运算
+        // 将点击的坐标按比例还原到正方形网格空间
+        float x = worldPos.x / (tileWidth / 2f);
+        float y = worldPos.y / (tileHeight / 2f);
 
-        int gridX = Mathf.FloorToInt(x - y);
-        int gridY = Mathf.FloorToInt(x + y);
+        // 旋转 45 度并取整
+        int gridX = Mathf.FloorToInt((x - y) / 2f);
+        int gridY = Mathf.FloorToInt((x + y) / 2f);
 
         return new Vector2Int(gridX, gridY);
     }
 
-    // 获取网格中心的世界坐标（用于放置建筑吸附）
+    // 获取网格中心的世界坐标（用于建筑吸附）
     public Vector3 IsoGridToWorld(int x, int y)
     {
-        float worldX = (x + y) * (tileWidth / 2f);
-        float worldY = (y - x) * (tileHeight / 2f);
+        // 这里的 +0.5f 是为了吸附到格子的“中心”，而不是格子的“左顶点”
+        float centerX = x;
+        float centerY = y;
+
+        float worldX = (centerX + centerY) * (tileWidth / 2f);
+        float worldY = (centerY - centerX) * (tileHeight / 2f);
+
         return new Vector3(worldX, worldY, 0);
     }
 
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
     private void Update()
     {
 

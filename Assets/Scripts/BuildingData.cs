@@ -1,9 +1,13 @@
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "NewBuilding", menuName = "Building/BuildingData")]
 public class BuildingData : ScriptableObject
 {
+    public List<TileBase> buildingTiles; // 不同等级的建筑对应不同的 Tile
     public string buildingName;
-    public Vector2Int size; // 比如皇宫 10x10，民居 2x3
-    public GameObject prefab; // 建筑模型
+    public List<int> coinCost; // 建筑成本
+
 }
