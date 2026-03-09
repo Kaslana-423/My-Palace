@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -11,47 +13,59 @@ public class PlaceSystem : MonoBehaviour
     public TileBase guanfuTile;   // 另一个建筑 Tile
     private TileBase currentTile;    // 当前选中的建筑 Tile
     private GameObject currentInstance;
-
+    private string currentBuildingName; // 当前选中的建筑名称
+    public List<TileBase> MbuildingTiles; // 不同等级的建筑对应不同的 Tile
+    public List<TileBase> GbuildingTiles; // 不同等级的建筑对应不同的 Tile
     public GameObject ConstructionPanel; // 建造面板
     private bool isPlacing = false; // 是否正在放置建筑
 
     void Awake()
     {
-        currentInstance = Instantiate(minju); // 默认放置民居
-        Instantiate(guanfu);
+        // 生成一个真实的预览物体，并保存它的引用
+        currentInstance = Instantiate(minju);
+        currentInstance.SetActive(false); // 初始时隐藏
+        currentBuildingName = "民居";
+        currentTile = minjuTile;
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab)) // 按 B 键打开建造面板
-        {
-            isPlacing = !isPlacing;
-            ConstructionPanel.SetActive(isPlacing);
-            currentInstance.SetActive(isPlacing); // 只有在放置模式下才显示预览建筑
-            currentTile = minjuTile; // 默认选中民居
-        }
-        if (currentInstance == null || !isPlacing) return;
-
-        if (Input.GetKeyDown(KeyCode.Alpha1)) // 按 1 键切换到民居
-        {
-            Destroy(currentInstance);
-            currentInstance = Instantiate(minju);
-            currentTile = minjuTile;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) // 按 2 键切换到官府
-        {
-            Destroy(currentInstance);
-            currentInstance = Instantiate(guanfu);
-            currentTile = guanfuTile;
-        }
-        // 1. 获取鼠标世界坐标
         Vector3 mouseScreenPos = Input.mousePosition;
         mouseScreenPos.z = Mathf.Abs(Camera.main.transform.position.z);
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
 
         // 2. 转换为格子坐标
         Vector3Int cellPos = buildingTilemap.WorldToCell(mouseWorldPos);
+        if (Input.GetKeyDown(KeyCode.Tab)) // 按 B 键打开建造面板
+        {
+            isPlacing = !isPlacing;
+            ConstructionPanel.SetActive(isPlacing);
+
+            if (currentInstance != null)
+                currentInstance.SetActive(isPlacing);
+        }
+        ManageResources(cellPos);
+
+        if (currentInstance == null || !isPlacing) return;
         // 3. 应用位置
         currentInstance.transform.position = buildingTilemap.GetCellCenterWorld(cellPos);
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) // 按 1 键切换到民居
+        {
+            Destroy(currentInstance); // 销毁当前的预览
+            currentInstance = Instantiate(minju); // 重新生成民居副本
+            currentTile = minjuTile;
+            currentBuildingName = "民居";
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) // 按 2 键切换到官府
+        {
+            Destroy(currentInstance); // 销毁当前的预览
+            currentInstance = Instantiate(guanfu); // 重新生成官府副本
+            currentTile = guanfuTile;
+            currentBuildingName = "官府";
+        }
+        // 1. 获取鼠标世界坐标
+
 
         if (Input.GetMouseButtonDown(0)) // 点击左键建造
         {// 1. 获取鼠标屏幕坐标
@@ -66,12 +80,84 @@ public class PlaceSystem : MonoBehaviour
                 Debug.Log("这里已经有东西啦！");
             }
         }
+
     }
 
     void PlaceBuilding(Vector3Int position)
     {
         // 调用 API 在指定位置放置 Tile
         buildingTilemap.SetTile(position, currentTile);
-        Debug.Log($"在 {position} 建造了 {currentTile.name}！");
+        BuildingData data = new BuildingData(currentBuildingName);
+        GameManager.Instance.buildingDataDict[position] = data; // 同步数据
+        Debug.Log($"在 {position} 建造了 {currentTile.name}");
+    }
+
+    void ManageResources(Vector3Int position)
+    {
+        if (Input.GetMouseButtonDown(1)) // 右键点击销毁建筑
+        {
+            if (buildingTilemap.HasTile(position))
+            {
+                buildingTilemap.SetTile(position, null); // 移除 Tile
+                GameManager.Instance.buildingDataDict.Remove(position); // 同步移除数据
+                Debug.Log($"拆除了 {position} 的建筑");
+            }
+        }
+        else if (Input.GetMouseButtonDown(2)) // 中键点击查看建筑信息
+        {
+            if (buildingTilemap.HasTile(position))
+            {
+                // 1. 防御性检查：GameManager 和字典是否正常？
+                if (GameManager.Instance == null || GameManager.Instance.buildingDataDict == null)
+                {
+                    Debug.LogError("GameManager 或字典未初始化！");
+                    return;
+                }
+
+                // 2. 安全读取字典：TryGetValue 避免字典里没数据时报错
+                if (GameManager.Instance.buildingDataDict.TryGetValue(position, out BuildingData data))
+                {
+                    // 3. 防御性检查：检查 coinCost 列表是否存在
+                    if (data.coinCost == null)
+                    {
+                        Debug.LogError("你的 BuildingData 类里面的 coinCost 列表没有实例化！(忘记 new List<int>() 了)");
+                        return;
+                    }
+
+                    // --- 下面是你原本正常的逻辑 ---
+                    if (data.buildingName == "民居")
+                    {
+                        if (data.level < data.coinCost.Count - 1)
+                        {
+                            data.level++;
+                            buildingTilemap.SetTile(position, MbuildingTiles[data.level]);
+                            Debug.Log($"这是一个民居，等级 {data.level}，升级需要 {data.coinCost[data.level]} 金币");
+                        }
+                        else
+                        {
+                            Debug.Log($"这是一个民居，等级 {data.level}，已经满级了！");
+                        }
+                    }
+                    else if (data.buildingName == "官府")
+                    {
+                        if (data.level < data.coinCost.Count - 1)
+                        {
+                            data.level++;
+                            buildingTilemap.SetTile(position, GbuildingTiles[data.level]);
+                            Debug.Log($"这是一个官府，等级 {data.level}，升级需要 {data.coinCost[data.level]} 金币");
+                        }
+                        else
+                        {
+                            Debug.Log($"这是一个官府，等级 {data.level}，已经满级了！");
+                        }
+                    }
+                }
+                else
+                {
+                    // 如果 Tilemap 上有图片，但字典里没数据，触发这里的提示
+                    Debug.LogWarning($"在 {position} 发现建筑贴图，但 GameManager 字典里没有它的数据！(是不是你在编辑器里手动刷的？)");
+                }
+            }
+        }
     }
 }
