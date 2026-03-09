@@ -13,18 +13,36 @@ public class NPCRoam : MonoBehaviour
 
     [Header("移动参数")]
     public float moveSpeed = 2.0f;
-    public float minIdleTime = 1.0f;
-    public float maxIdleTime = 3.0f;
+    public float minIdleTime = 0.5f; // 缩短一点发呆时间，让街区更热闹
+    public float maxIdleTime = 2.0f;
 
     private NPCState currentState = NPCState.Idle;
-    private Waypoint currentWaypoint; // 当前所在的路点（或者上一个经过的路点）
-    private Waypoint targetWaypoint;  // 正在前往的路点
+    
+    // 逻辑上的目标路点（用于获取下一个邻居）
+    private Waypoint currentWaypoint; 
+    private Waypoint targetWaypoint;  
+    
+    // [核心修改] 实际移动的物理坐标目标
+    private Vector3 currentDestination; 
+    
     private float idleTimer;
 
-    private void Start()
+    // [重要] 改用 OnEnable，因为配合对象池使用时，Start 只会执行一次
+    // 每次 SetActive(true) 都会触发 OnEnable
+    private void OnEnable()
     {
-        // 初始化：先找到场景里离自己最近的一个路点，假装自己刚从那里过来
+        InitializeNPC();
+    }
+
+    private void InitializeNPC()
+    {
+        targetWaypoint = null;
+        currentState = NPCState.Idle;
+        
+        // 刚出生时，先搞清楚自己属于哪个路点管辖
         FindNearestWaypointAsStart();
+        
+        // 出生后稍微发呆一下，或者立刻开始走
         EnterIdleState();
     }
 
@@ -43,18 +61,23 @@ public class NPCRoam : MonoBehaviour
 
     private void FindNearestWaypointAsStart()
     {
-        // 在场景中找所有的 Waypoint 组件（注意效率，仅在 Start 用一次）
-        Waypoint[] allWaypoints = FindObjectsOfType<Waypoint>();
-        
-        if (allWaypoints.Length > 0)
+        // 性能优化：优先使用 Manager 的快速查找，没有才用 FindObjectsOfType
+        if (WaypointManager.Instance != null)
         {
-            // 使用 Linq 简便地按距离排序取最近的一个
-            currentWaypoint = allWaypoints.OrderBy(w => Vector3.Distance(transform.position, w.transform.position)).First();
-            // 瞬间吸附过去，或者只是将其标记为当前点均可，这里只标记逻辑归属
+            Transform nearest = WaypointManager.Instance.GetNearestWaypoint(transform.position);
+            if (nearest != null)
+            {
+                currentWaypoint = nearest.GetComponent<Waypoint>();
+            }
         }
         else
         {
-            Debug.LogError("场景里没有 Waypoint 组件！无法初始化 NPC。");
+            // 备用方案（较慢）
+            Waypoint[] allWaypoints = FindObjectsOfType<Waypoint>();
+            if (allWaypoints.Length > 0)
+            {
+                currentWaypoint = allWaypoints.OrderBy(w => Vector3.Distance(transform.position, w.transform.position)).First();
+            }
         }
     }
 
@@ -79,22 +102,29 @@ public class NPCRoam : MonoBehaviour
     {
         if (currentWaypoint == null)
         {
-            FindNearestWaypointAsStart(); // 尝试救援
+            FindNearestWaypointAsStart(); 
             if (currentWaypoint == null) return;
         }
 
-        // 核心改动：不再向 Manager 要随机点，而是向当前点要邻居
+        // 1. 获取下一个逻辑路点
         Waypoint nextPoint = currentWaypoint.GetRandomNeighbor();
 
         if (nextPoint != null)
         {
             targetWaypoint = nextPoint;
+            
+            // [核心修改] 决定具体的移动坐标！
+            // 不再是去圆心，而是去路口范围内的一个随机点
+            currentDestination = nextPoint.GetRandomPositionInNode();
+            
+            // 锁定 Z 轴，防止 NPC 乱飘
+            currentDestination.z = transform.position.z;
+
             currentState = NPCState.Walk;
         }
         else
         {
-            // 如果当前点没有邻居（死胡同），继续呆着或者报错
-            // Debug.LogWarning($"路点 {currentWaypoint.name} 没有连接邻居！");
+            // 死胡同，继续发呆
             EnterIdleState(); 
         }
     }
@@ -107,18 +137,17 @@ public class NPCRoam : MonoBehaviour
             return;
         }
 
-        Vector3 targetPos = targetWaypoint.transform.position;
-        targetPos.z = transform.position.z; // 保持 Z 轴一致
+        // [核心修改] 移动向缓存的坐标，而不是 transform.position
+        transform.position = Vector3.MoveTowards(transform.position, currentDestination, moveSpeed * Time.deltaTime);
 
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, targetPos) < 0.05f)
+        // 检查到达状态
+        if (Vector3.Distance(transform.position, currentDestination) < 0.1f)
         {
             // 到达目标
-            // 更新逻辑状态：我现在到达了 target，它变成了我的 current
             currentWaypoint = targetWaypoint;
             targetWaypoint = null;
             
+            // 到达后发呆一会
             EnterIdleState();
         }
     }

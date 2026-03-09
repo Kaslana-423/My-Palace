@@ -2,23 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 路点管理器，使用单例模式，方便 NPC 随时访问
+// 路点管理器：只负责提供“所有路点在哪里”，不再负责画图
 public class WaypointManager : MonoBehaviour
 {
-    // 单例实例
     public static WaypointManager Instance { get; private set; }
 
     [Header("设置")]
-    [Tooltip("将场景中的路点 Transform 拖到这里，或者在 Awake 中自动抓取")]
     public List<Transform> waypoints = new List<Transform>();
-
-    [Header("调试显示")]
-    public Color gizmoColor = Color.cyan; // 路点显示的颜色
-    public float gizmoRadius = 0.3f;      // 路点球体的大小
 
     private void Awake()
     {
-        // 实现单例模式：确保场景中只有一个管理器
         if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
@@ -28,7 +21,7 @@ public class WaypointManager : MonoBehaviour
             Instance = this;
         }
 
-        // 如果列表为空，尝试自动查找当前物体下的所有子物体作为路点
+        // 自动初始化路点列表
         if (waypoints.Count == 0)
         {
             foreach (Transform child in transform)
@@ -38,44 +31,37 @@ public class WaypointManager : MonoBehaviour
         }
     }
 
-    // 获取一个随机路点
+    // 获取随机点（保留用于旧逻辑）
     public Transform GetRandomWaypoint()
     {
-        if (waypoints.Count == 0)
-        {
-            Debug.LogWarning("WaypointManager: 没有可用的路点！");
-            return null;
-        }
-
-        int randomIndex = Random.Range(0, waypoints.Count);
-        return waypoints[randomIndex];
+        if (waypoints.Count == 0) return null;
+        return waypoints[Random.Range(0, waypoints.Count)];
     }
 
-    // 可视化辅助线绘制
-    private void OnDrawGizmos()
+    /// <summary>
+    /// [性能优化] 获取距离指定位置最近的路点。
+    /// 避免使用 LINQ 以减少运行时垃圾回收（GC）。
+    /// </summary>
+    public Transform GetNearestWaypoint(Vector3 position)
     {
-        Gizmos.color = gizmoColor;
+        if (waypoints.Count == 0) return null;
 
-        if (waypoints != null && waypoints.Count > 0)
+        Transform nearest = null;
+        float minDistSq = float.MaxValue; // 使用距离平方比较，省去开平方根的性能消耗
+
+        foreach (Transform wp in waypoints)
         {
-            foreach (Transform point in waypoints)
+            if (wp == null) continue;
+            
+            // 计算距离平方
+            float distSq = (wp.position - position).sqrMagnitude;
+            if (distSq < minDistSq)
             {
-                if (point != null) DrawWaypoint(point.position);
+                minDistSq = distSq;
+                nearest = wp;
             }
         }
-        else
-        {
-            // 还没运行时，直接画子物体位置
-            foreach (Transform child in transform)
-            {
-                DrawWaypoint(child.position);
-            }
-        }
-    }
-
-    private void DrawWaypoint(Vector3 position)
-    {
-        Gizmos.DrawSphere(position, gizmoRadius);
-        Gizmos.DrawWireSphere(position, gizmoRadius + 0.1f);
+        
+        return nearest;
     }
 }
