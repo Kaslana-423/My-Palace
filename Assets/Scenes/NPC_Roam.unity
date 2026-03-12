@@ -161,6 +161,9 @@ MonoBehaviour:
   - name: "\u84DD\u7537\u4FA0"
     prefab: {fileID: 3994469864345338311, guid: 53e99cf1c7d0a294f93b07d9daa41595, type: 3}
     weight: 50
+  - name: "\u7EFF\u5B98\u4EBA"
+    prefab: {fileID: 3994469864345338311, guid: 5c3c9b375a1581740bad68d0ba92d7b3, type: 3}
+    weight: 50
   poolSize: 50
   spawnInterval: 0.05
   minSpawnMargin: 0.05
