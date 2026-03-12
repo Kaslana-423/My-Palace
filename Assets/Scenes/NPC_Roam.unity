@@ -179,12 +179,12 @@ MonoBehaviour:
   - name: "\u9EC4\u5C11\u5973"
     prefab: {fileID: 3994469864345338311, guid: 7ab98d6ca800f3140ab01212ae6074b5, type: 3}
     weight: 10
-  poolSize: 100
-  spawnInterval: 0.1
-  minSpawnMargin: 0.05
-  maxSpawnMargin: 0.3
-  spawnOnRoadChance: 0.7
+  npcPrefab: {fileID: 0}
+  targetDensity: 30
+  minEmergencyCount: 5
+  spawnMargin: 5
   despawnMargin: 0.35
+  spawnOnRoadChance: 0.8
 --- !u!4 &23433523
 Transform:
   m_ObjectHideFlags: 0
@@ -608,7 +608,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1
+  orthographic size: 1.8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
