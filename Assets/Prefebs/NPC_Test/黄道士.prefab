@@ -98,9 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c20c02e532b4a4e8b0956f283066c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.2
+  moveSpeed: 0.1
   minIdleTime: 1
   maxIdleTime: 3
+  sortingOrderBase: 5000
 --- !u!95 &4570959854243011992
 Animator:
   serializedVersion: 5
@@ -111,7 +112,7 @@ Animator:
   m_GameObject: {fileID: 3994469864345338311}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 67ed32cf20eedb045b4da3a264967a82, type: 2}
+  m_Controller: {fileID: 9100000, guid: bea868e022585f142b814cead21075c5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
