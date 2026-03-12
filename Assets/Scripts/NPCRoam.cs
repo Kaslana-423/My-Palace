@@ -122,24 +122,92 @@ public class NPCRoam : MonoBehaviour
 
     private void FindNearestWaypointAsStart()
     {
-        // 优先使用 Manager 的快速查找，没有才用 FindObjectsOfType
-        if (WaypointManager.Instance != null)
+        if (WaypointManager.Instance == null || WaypointManager.Instance.waypoints.Count == 0) return;
+
+        List<Transform> allWaypoints = WaypointManager.Instance.waypoints;
+        Camera cam = Camera.main;
+        if (cam == null) return;
+
+        // 准备三个候选列表，优先级递减
+        Transform bestTarget = null;
+        float minDistance = float.MaxValue;
+
+        // 我们把所有候选点分成三个优先级：
+        // 1级：终点就在屏幕里 (OnScreen)
+        // 2级：虽然终点在外面，但走过去会穿过屏幕 (Crossing)
+        // 3级：完全在屏幕外 (OffScreen)
+        
+        int bestPriority = -1; // 3=OnScreen, 2=Crossing, 1=OffScrenn
+
+        Vector3 myPos = transform.position;
+        // 获取我的视口坐标 (0~1)
+        Vector3 myViewportPos = cam.WorldToViewportPoint(myPos); 
+        myViewportPos.z = 0; // 忽略深度
+
+        foreach (Transform wp in allWaypoints)
         {
-            Transform nearest = WaypointManager.Instance.GetNearestWaypoint(transform.position);
-            if (nearest != null)
+            if (wp == null) continue;
+
+            float dist = Vector3.Distance(myPos, wp.position);
+            
+            // 视口坐标检查
+            Vector3 wpViewportPos = cam.WorldToViewportPoint(wp.position);
+            wpViewportPos.z = 0;
+
+            bool isTargetOnScreen = IsPointInViewport(wpViewportPos);
+            bool isPathCrossingScreen = false;
+
+            // 如果终点不在屏幕内，我们检测一下路径是否穿过屏幕
+            // 简单的采样检测：取路径上的 25%, 50%, 75% 处，看是否有一点在屏幕内
+            if (!isTargetOnScreen)
             {
-                currentWaypoint = nearest.GetComponent<Waypoint>();
+                // 只有当我和目标分别在屏幕两侧（或者我是刚出屏幕及目标在另一头）时，才大概率穿越
+                // 这里用简单的插值采样，性能足够且有效
+                for (float t = 0.2f; t <= 0.8f; t += 0.2f)
+                {
+                    Vector3 samplePos = Vector3.Lerp(myViewportPos, wpViewportPos, t);
+                    if (IsPointInViewport(samplePos))
+                    {
+                        isPathCrossingScreen = true;
+                        break;
+                    }
+                }
+            }
+
+            // 评级
+            int priority = 1; // 默认三级优先级
+            if (isTargetOnScreen) priority = 3; // 一级优先级
+            else if (isPathCrossingScreen) priority = 2; // 二级优先级
+
+            // 择优逻辑：
+            // 1. 如果发现更高优先级的类别，立刻强制切换到该类别，并重置最小距离
+            // 2. 如果优先级相同，选距离最近的
+            if (priority > bestPriority)
+            {
+                bestPriority = priority;
+                bestTarget = wp;
+                minDistance = dist;
+            }
+            else if (priority == bestPriority)
+            {
+                if (dist < minDistance)
+                {
+                    minDistance = dist;
+                    bestTarget = wp;
+                }
             }
         }
-        else
+
+        if (bestTarget != null)
         {
-            // 备用方案（较慢）
-            Waypoint[] allWaypoints = FindObjectsOfType<Waypoint>();
-            if (allWaypoints.Length > 0)
-            {
-                currentWaypoint = allWaypoints.OrderBy(w => Vector3.Distance(transform.position, w.transform.position)).First();
-            }
+            currentWaypoint = bestTarget.GetComponent<Waypoint>();
         }
+    }
+
+    // 辅助函数：判断视口坐标是否在屏幕内 (0-1)
+    private bool IsPointInViewport(Vector3 vpPos)
+    {
+        return vpPos.x >= 0 && vpPos.x <= 1 && vpPos.y >= 0 && vpPos.y <= 1;
     }
 
     // --- 状态流转 ---
