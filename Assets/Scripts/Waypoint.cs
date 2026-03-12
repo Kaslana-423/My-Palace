@@ -9,12 +9,12 @@ public class Waypoint : MonoBehaviour
 
     [Header("街道参数")]
     [Tooltip("路口节点的半径")]
-    public float radius = 2.0f; 
+    public float radius = 2.0f;
     [Tooltip("连接道路的宽度")]
     public float roadWidth = 2.0f;
 
     [Header("调试显示")]
-    public Color pointColor = new Color(0, 1, 1, 0.5f); // 半透明青色
+    public Color pointColor = new Color(0, 1, 1, 1f); // 改为不透明的线条颜色，看清楚点
     public Color roadColor = new Color(0, 1, 0, 0.3f);  // 半透明绿色
     public bool showGizmos = true;
 
@@ -30,8 +30,6 @@ public class Waypoint : MonoBehaviour
     /// </summary>
     public Vector3 GetRandomPositionInNode()
     {
-        // insideUnitCircle 返回半径为1的圆内随机点
-        // 乘以 radius 将其扩大到设定的路口大小
         Vector2 randomCircle = Random.insideUnitCircle * radius;
         return transform.position + new Vector3(randomCircle.x, randomCircle.y, 0);
     }
@@ -40,9 +38,9 @@ public class Waypoint : MonoBehaviour
     {
         if (!showGizmos) return;
 
-        // 1. 画路口节点区域（实心圆盘）
+        // [修改] 1. 画路口节点区域（使用空心圆圈，不再遮挡视野）
         Gizmos.color = pointColor;
-        Gizmos.DrawSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, radius);
 
         // 2. 画连接道路区域（矩形条带）
         Gizmos.color = roadColor;

@@ -2,10 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 1. 定义一个配置结构，显示在面板上
+[System.Serializable]
+public struct NPCWeight
+{
+    public string name;         // 备注名字（方便你看）
+    public GameObject prefab;   // NPC 预制体
+    [Range(0, 100)]
+    public int weight;          // 出现权重（比如 50 代表概率很高，1 代表很低）
+}
+
 public class PedestrianManager : MonoBehaviour
 {
+    [Header("NPC 图鉴与权重")]
+    // 2. 用列表替代原来的单个 prefab
+    public List<NPCWeight> npcTypes = new List<NPCWeight>();
+    
     [Header("对象池设置")]
-    public GameObject npcPrefab;
     public int poolSize = 50;
 
     [Header("生成规则")]
@@ -47,15 +60,72 @@ public class PedestrianManager : MonoBehaviour
         InitializePool();
     }
 
+    // 3. 修改初始化逻辑：按权重填充池子
     void InitializePool()
     {
         pool = new List<GameObject>();
         GameObject poolRoot = new GameObject("NPC_Pool_Root");
-        for (int i = 0; i < poolSize; i++)
+
+        // 计算总权重
+        int totalWeight = 0;
+        foreach (var npc in npcTypes)
         {
-            GameObject obj = Instantiate(npcPrefab, poolRoot.transform);
-            obj.SetActive(false); 
+            totalWeight += npc.weight;
+        }
+
+        if (totalWeight <= 0)
+        {
+            Debug.LogError("NPC 总权重不能为 0！请检查 PedestrianManager 配置。");
+            return;
+        }
+
+        // 既然池子大小是固定的 (poolSize)，我们需要按比例分配数量
+        // 比如 poolSize=50，A权重80，B权重20。
+        // A 的数量 = 50 * (80/100) = 40 个
+        // B 的数量 = 50 * (20/100) = 10 个
+        
+        int currentCount = 0;
+
+        foreach (var npc in npcTypes)
+        {
+            // 计算这种 NPC 该生成多少个
+            float ratio = (float)npc.weight / totalWeight;
+            int countToSpawn = Mathf.RoundToInt(poolSize * ratio);
+
+            for (int i = 0; i < countToSpawn; i++)
+            {
+                if (currentCount >= poolSize) break; // 防止计算误差导致溢出
+
+                GameObject obj = Instantiate(npc.prefab, poolRoot.transform);
+                obj.SetActive(false); 
+                pool.Add(obj);
+                currentCount++;
+            }
+        }
+
+        // 如果因为四舍五入导致数量不够 poolSize，用权重最大的那个补齐
+        while (currentCount < poolSize && npcTypes.Count > 0)
+        {
+            GameObject obj = Instantiate(npcTypes[0].prefab, poolRoot.transform);
+            obj.SetActive(false);
             pool.Add(obj);
+            currentCount++;
+        }
+        
+        // 4.极其重要：打乱池子！
+        // 否则前40个全是A，后10个全是B。导致游戏刚开始全是A，后期才是B。
+        ShuffleList(pool);
+    }
+
+    // Fisher-Yates 洗牌算法
+    void ShuffleList<T>(List<T> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            T temp = list[i];
+            int randomIndex = Random.Range(i, list.Count);
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
         }
     }
 
@@ -92,7 +162,6 @@ public class PedestrianManager : MonoBehaviour
         );
     }
 
-    // [核心修改 2] 在生成时进行多次尝试，剔除掉那些落在屏幕内的“坏点”
     void TrySpawnOnePedestrian(Rect cameraRect)
     {
         GameObject npc = GetInactiveNPC();
@@ -113,8 +182,6 @@ public class PedestrianManager : MonoBehaviour
         // --- 尝试道路生成 ---
         if (hasRoads && Random.value < spawnOnRoadChance)
         {
-            // 给5次机会。虽然 startNode 可能在屏幕内，但路是长的
-            // 我们随机取点，如果取到了屏幕内的点，就重试，直到取到屏幕外的点
             for (int i = 0; i < 5; i++)
             {
                 Waypoint startNode = validRoadStarts[Random.Range(0, validRoadStarts.Count)];
@@ -123,13 +190,11 @@ public class PedestrianManager : MonoBehaviour
                 if (endNode != null)
                 {
                     Vector3 p = GetRandomPointOnRoad(startNode, endNode);
-                    // 必须满足：在内框外（看不到的地方），且在外框内（别太远）
-                    // contains 返回 true 表示在框内，我们要 !inner.Contains
                     if (!innerRect.Contains(p) && outerRect.Contains(p))
                     {
                         spawnPos = p;
                         readyToSpawn = true;
-                        break; // 找到了！退出循环
+                        break; 
                     }
                 }
             }
@@ -151,7 +216,6 @@ public class PedestrianManager : MonoBehaviour
         }
     }
 
-    // [核心修改 1] 放宽筛选条件
     void CollectValidSpawnAreas(Rect inner, Rect outer)
     {
         validWaypoints.Clear();
@@ -167,23 +231,15 @@ public class PedestrianManager : MonoBehaviour
             bool insideOuter = outer.Contains(pos);
             bool insideInner = inner.Contains(pos);
 
-            // 情况 A：点正好在生成带上 -> 完美，直接加
             if (insideOuter && !insideInner)
             {
-                validWaypoints.Add(wp); // 可以作为点生成
-                if (wp.neighbors.Count > 0) validRoadStarts.Add(wp); // 也可以作为路起点
+                validWaypoints.Add(wp); 
+                if (wp.neighbors.Count > 0) validRoadStarts.Add(wp); 
             }
-            // 情况 B（修复你的Bug）：点在屏幕内（太近），但它连着外面的路
             else if (insideInner)
             {
-                // 点生成？不行！还是会突然冒出来。所以不加进 validWaypoints
-                
-                // 路生成？有可能！检查它的邻居有没有在外面的
-                // 只要该点有连线出去，这根线必然穿过生成带
                 if (wp.neighbors.Count > 0)
                 {
-                    // 只要有邻居，我们就把它作为候选路段加入
-                    // 具体这个路段的哪一部分在生成带上，交给 TrySpawn 里的随机重试去解决
                     validRoadStarts.Add(wp);
                 }
             }
@@ -219,9 +275,16 @@ public class PedestrianManager : MonoBehaviour
         }
     }
 
+    // 5. 修改获取逻辑：其实这里不需要改，因为池子已经随机化了，按顺序取就行
     GameObject GetInactiveNPC()
     {
-        for (int i = 0; i < pool.Count; i++) if (!pool[i].activeSelf) return pool[i];
+        for (int i = 0; i < pool.Count; i++) 
+        {
+            if (!pool[i].activeSelf) 
+            {
+                return pool[i];
+            }
+        }
         return null;
     }
 
