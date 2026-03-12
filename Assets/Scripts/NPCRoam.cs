@@ -15,6 +15,11 @@ public class NPCRoam : MonoBehaviour
     public float moveSpeed = 2.0f;
     public float minIdleTime = 0.5f;
     public float maxIdleTime = 2.0f;
+    
+    // [新增] 渲染层级基数
+    [Header("渲染设置")]
+    [Tooltip("排序层级基数，防止Y轴为正时层级过低被地面遮挡。建议设为 5000 或更大。")]
+    public int sortingOrderBase = 5000; 
 
     private NPCState currentState = NPCState.Idle;
     
@@ -29,6 +34,9 @@ public class NPCRoam : MonoBehaviour
 
     // [新增] 动画组件引用
     private Animator animator;
+    // [新增] 渲染组件引用，用于排序
+    private SpriteRenderer spriteRenderer;
+
     // 缓存 Animator 参数的哈希值，能微弱提升性能
     private static readonly int IsWalkingHash = Animator.StringToHash("IsWalking");
     private static readonly int DirXHash = Animator.StringToHash("DirX");
@@ -37,6 +45,8 @@ public class NPCRoam : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        // 获取 SpriteRenderer
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // 每次 SetActive(true) 都会触发 OnEnable
@@ -95,6 +105,18 @@ public class NPCRoam : MonoBehaviour
             case NPCState.Walk:
                 HandleWalk();
                 break;
+        }
+    }
+
+    // [新增] 在每一帧渲染前，根据 Y 轴高度动态调整层级
+    private void LateUpdate()
+    {
+        if (spriteRenderer != null)
+        {
+            // [修改] 加上 sortingOrderBase (5000)
+            // 举例：Y = 10 -> -1000 + 5000 = 4000 (大于地面 0，显示正常)
+            // 举例：Y = -10 -> 1000 + 5000 = 6000 (挡住上面的 4000，遮挡关系正确)
+            spriteRenderer.sortingOrder = (int)(-transform.position.y * 100) + sortingOrderBase;
         }
     }
 
