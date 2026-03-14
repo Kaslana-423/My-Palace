@@ -7,6 +7,7 @@ public class BuildingData : MonoBehaviour
 {
     public string buildingName;
     public List<int> coinCost; // 建筑成本
+
     public int level = 0; // 当前建筑等级
     public BuildingData(string name)
     {

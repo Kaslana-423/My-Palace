@@ -9,27 +9,60 @@ public class Building : MonoBehaviour
 {
     public Button upgradeButton; // 升级按钮
     public Button demolishButton; // 拆除按钮
-    public TextMeshProUGUI levelText; // 显示等级的文本
+    public Image buildingImage; // 显示建筑图标的 Image 组件
+    public List<Sprite> mingju; // 民居等级图标列表
+    public List<Sprite> guanfu; // 官府等级图标列表
+    public TextMeshProUGUI coinCostText; // 显示升级成本的文本
+    public TextMeshProUGUI buildingNameText; // 显示建筑名称的文本
+    public TextMeshProUGUI demolishRefundText; // 显示拆除返还金币的文本
 
-    void Start()
+    private void OnEnable()
     {
-        if (upgradeButton != null)
+        if (PlaceSysManager.Instance != null)
         {
-            upgradeButton.onClick.AddListener(OnUpgradeClicked);
+            PlaceSysManager.Instance.BuildingUpgraded += RefreshUI;
         }
-        if (demolishButton != null)
+    }
+
+    private void OnDisable()
+    {
+        if (PlaceSysManager.Instance != null)
         {
-            demolishButton.onClick.AddListener(OnDemolishClicked);
+            PlaceSysManager.Instance.BuildingUpgraded -= RefreshUI;
         }
     }
 
-    private void OnUpgradeClicked()
+    public void RefreshUI(Vector3Int position)
     {
+        if (!GameManager.HasInstance)
+        {
+            return;
+        }
 
+        if (!GameManager.Instance.buildingDataDict.TryGetValue(position, out BuildingData data))
+        {
+            return;
+        }
+
+        buildingNameText.text = data.buildingName + "-lv." + (data.level + 1).ToString();
+        if (data.buildingName == "民居")
+        {
+            buildingImage.sprite = mingju[data.level];
+        }
+        else if (data.buildingName == "官府")
+        {
+            buildingImage.sprite = guanfu[data.level];
+        }
+        if (data.level < data.coinCost.Count)
+        {
+            coinCostText.text = $"消耗: {data.coinCost[data.level]}";
+            upgradeButton.interactable = true;
+        }
+        else
+        {
+            upgradeButton.interactable = false; // 禁用升级按钮
+        }
+        demolishRefundText.text = $"拆除返还: {data.coinCost[Math.Max(0, data.level - 1)] / 2}"; // 返还上一级成本的一半
     }
 
-    private void OnDemolishClicked()
-    {
-        throw new NotImplementedException();
-    }
 }

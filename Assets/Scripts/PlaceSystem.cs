@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using System;
 
-public class PlaceSystem : MonoBehaviour
+public class PlaceSysManager : MonoBehaviour
 {
     public Grid grid;               // 场景中的 Grid 组件
+    public static PlaceSysManager Instance { get; private set; }
     public GameObject guanfu;
     public GameObject minju;
     public GameObject panel;
@@ -19,6 +21,8 @@ public class PlaceSystem : MonoBehaviour
     private string currentBuildingName; // 当前选中的建筑名称
     public List<TileBase> MbuildingTiles; // 不同等级的建筑对应不同的 Tile
     public List<TileBase> GbuildingTiles; // 不同等级的建筑对应不同的 Tile
+    public event Action<Vector3Int> BuildingUpgraded;
+    public event Action<Vector3Int> BuildingDemolished;
     public GameObject ConstructionPanel; // 建造面板
     private bool isPlacing = false; // 是否正在放置建筑
     private bool isChecking = false; // 是否正在检查升级
@@ -27,7 +31,13 @@ public class PlaceSystem : MonoBehaviour
 
     void Awake()
     {
-        // 生成一个真实的预览物体，并保存它的引用
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
         panel.SetActive(false);
         currentInstance = Instantiate(minju);
         currentInstance.SetActive(false); // 初始时隐藏
@@ -124,6 +134,7 @@ public class PlaceSystem : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && !isPlacing) // 右键查看建筑信息/升级/拆除
         {
+
             panel.gameObject.transform.position = Input.mousePosition;
             if (buildingTilemap.HasTile(position))
             {
@@ -131,6 +142,7 @@ public class PlaceSystem : MonoBehaviour
                 hasSelectedBuilding = true;
                 panel.SetActive(!isChecking);
                 isChecking = !isChecking;
+                BuildingUpgraded?.Invoke(position);
             }
             else
             {
@@ -142,7 +154,6 @@ public class PlaceSystem : MonoBehaviour
         }
     }
 
-
     public void UpgradeSelectedBuilding()
     {
         if (!hasSelectedBuilding)
@@ -150,7 +161,6 @@ public class PlaceSystem : MonoBehaviour
             Debug.Log("请先右键选中一个建筑，再点击升级按钮");
             return;
         }
-
         UpgradeBuilding(selectedBuildingPosition);
     }
 
@@ -161,7 +171,6 @@ public class PlaceSystem : MonoBehaviour
             Debug.Log("请先右键选中一个建筑，再点击拆除按钮");
             return;
         }
-
         DestroyBuilding(selectedBuildingPosition);
     }
 
@@ -178,6 +187,7 @@ public class PlaceSystem : MonoBehaviour
                 panel.SetActive(false);
                 isChecking = false;
             }
+            BuildingDemolished?.Invoke(position);
             Debug.Log($"拆除了 {position} 的建筑");
         }
         else
@@ -223,6 +233,7 @@ public class PlaceSystem : MonoBehaviour
                         data.level = nextLevel;
                         buildingTilemap.SetTile(position, MbuildingTiles[data.level]);
                         Debug.Log($"这是一个民居，等级 {data.level}，升级花费 {upgradeCost} 金币");
+                        BuildingUpgraded?.Invoke(position);
                     }
                     else
                     {
@@ -243,6 +254,7 @@ public class PlaceSystem : MonoBehaviour
                         data.level = nextLevel;
                         buildingTilemap.SetTile(position, GbuildingTiles[data.level]);
                         Debug.Log($"这是一个官府，等级 {data.level}，升级花费 {upgradeCost} 金币");
+                        BuildingUpgraded?.Invoke(position);
                     }
                     else
                     {

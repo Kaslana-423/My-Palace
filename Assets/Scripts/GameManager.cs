@@ -10,10 +10,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int coins = 1000; // 初始金币数量
     public int Coins => coins;
-
     public event Action<int> CoinsChanged;
-    public event Action<Vector3Int, BuildingData> BuildingUpgraded;
-    public event Action<Vector3Int> BuildingDemolished;
+
 
     public Dictionary<Vector3Int, BuildingData> buildingDataDict = new Dictionary<Vector3Int, BuildingData>();
 
@@ -26,10 +24,6 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
-    }
-    public void TryUpgradeBuilding(Vector3Int position)
-    {
-
     }
 
     public void AddCoins(int amount)
