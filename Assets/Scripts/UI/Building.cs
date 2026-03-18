@@ -47,11 +47,17 @@ public class Building : MonoBehaviour
         buildingNameText.text = data.buildingName + "-lv." + (data.level + 1).ToString();
         if (data.buildingName == "民居")
         {
-            buildingImage.sprite = mingju[data.level];
+            if (data.level >= 0 && data.level < mingju.Count)
+            {
+                SetBuildingSpriteNativeSize(mingju[data.level]);
+            }
         }
         else if (data.buildingName == "官府")
         {
-            buildingImage.sprite = guanfu[data.level];
+            if (data.level >= 0 && data.level < guanfu.Count)
+            {
+                SetBuildingSpriteNativeSize(guanfu[data.level]);
+            }
         }
         if (data.level < data.coinCost.Count)
         {
@@ -63,6 +69,17 @@ public class Building : MonoBehaviour
             upgradeButton.interactable = false; // 禁用升级按钮
         }
         demolishRefundText.text = $"拆除返还: {data.coinCost[Math.Max(0, data.level - 1)] / 2}"; // 返还上一级成本的一半
+    }
+
+    private void SetBuildingSpriteNativeSize(Sprite sprite)
+    {
+        if (buildingImage == null || sprite == null)
+        {
+            return;
+        }
+
+        buildingImage.sprite = sprite;
+        buildingImage.SetNativeSize();
     }
 
 }
