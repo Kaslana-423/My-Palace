@@ -8,15 +8,29 @@ public class Waypoint : MonoBehaviour
     public List<Waypoint> neighbors = new List<Waypoint>();
 
     [Header("街道参数")]
-    [Tooltip("路口节点的半径")]
-    public float radius = 2.0f;
-    [Tooltip("连接道路的宽度")]
+    public float radius = 2.0f; 
     public float roadWidth = 2.0f;
 
+    [Header("流量统计")]
+    // [新增] 当前有多少个 NPC 正在前往或停留在这个路点
+    public int currentOccupancy = 0;
+
     [Header("调试显示")]
-    public Color pointColor = new Color(0, 1, 1, 1f); // 改为不透明的线条颜色，看清楚点
-    public Color roadColor = new Color(0, 1, 0, 0.3f);  // 半透明绿色
+    public Color pointColor = new Color(0, 1, 1, 1f); 
+    public Color roadColor = new Color(0, 1, 0, 0.3f);  
     public bool showGizmos = true;
+
+    // [新增] 注册/注销方法
+    public void RegisterNPC()
+    {
+        currentOccupancy++;
+    }
+
+    public void UnregisterNPC()
+    {
+        currentOccupancy--;
+        if (currentOccupancy < 0) currentOccupancy = 0;
+    }
 
     // 获取随机邻居
     public Waypoint GetRandomNeighbor()
@@ -38,8 +52,11 @@ public class Waypoint : MonoBehaviour
     {
         if (!showGizmos) return;
 
+        // 根据拥挤程度改变颜色：人越多越红，人越少越青
+        float crowdFactor = Mathf.Clamp01(currentOccupancy / 5.0f);
+        Gizmos.color = Color.Lerp(pointColor, Color.red, crowdFactor);
+        
         // [修改] 1. 画路口节点区域（使用空心圆圈，不再遮挡视野）
-        Gizmos.color = pointColor;
         Gizmos.DrawWireSphere(transform.position, radius);
 
         // 2. 画连接道路区域（矩形条带）
@@ -48,10 +65,7 @@ public class Waypoint : MonoBehaviour
         {
             foreach (Waypoint neighbor in neighbors)
             {
-                if (neighbor != null)
-                {
-                    DrawRoadSegment(neighbor);
-                }
+                if (neighbor != null) DrawRoadSegment(neighbor);
             }
         }
     }
@@ -86,15 +100,11 @@ public class Waypoint : MonoBehaviour
         int count = 0;
         foreach (Waypoint neighbor in neighbors)
         {
-            if (neighbor != null)
+            if (neighbor != null && !neighbor.neighbors.Contains(this))
             {
-                if (!neighbor.neighbors.Contains(this))
-                {
-                    neighbor.neighbors.Add(this);
-                    count++;
-                }
+                neighbor.neighbors.Add(this);
+                count++;
             }
         }
-        Debug.Log($"操作完成，新增了 {count} 条反向连接。");
     }
 }
