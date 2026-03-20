@@ -1095,7 +1095,6 @@ GameObject:
   - component: {fileID: 250747608}
   - component: {fileID: 250747607}
   - component: {fileID: 250747606}
-  - component: {fileID: 250747610}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1190,22 +1189,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &250747610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250747605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46e72653dfe4f454991c5ba1d854db76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coinText: {fileID: 931218555}
-  populationText: {fileID: 466494346}
-  personAngerText: {fileID: 37763804}
-  roundsText: {fileID: 2133758878}
 --- !u!1 &262818111
 GameObject:
   m_ObjectHideFlags: 0
@@ -2965,7 +2948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coins: 100
   population: 50
-  personAnger: 0
+  satisfaction: 0
   rounds: 1
 --- !u!1 &931218553
 GameObject:
@@ -4002,6 +3985,7 @@ GameObject:
   - component: {fileID: 1442281420}
   - component: {fileID: 1442281419}
   - component: {fileID: 1442281418}
+  - component: {fileID: 1442281421}
   m_Layer: 5
   m_Name: Basic
   m_TagString: Untagged
@@ -4028,7 +4012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 171.7721, y: -258.99182}
+  m_AnchoredPosition: {x: 213.92744, y: -258.99405}
   m_SizeDelta: {x: 427.8549, y: 517.9881}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1442281418
@@ -4093,6 +4077,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1442281416}
   m_CullTransparentMesh: 1
+--- !u!114 &1442281421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442281416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e72653dfe4f454991c5ba1d854db76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinText: {fileID: 931218555}
+  populationText: {fileID: 466494346}
+  satisfactionText: {fileID: 37763804}
+  roundsText: {fileID: 2133758878}
 --- !u!1 &1443138714
 GameObject:
   m_ObjectHideFlags: 0
@@ -6444,10 +6444,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 250747609}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 464.1}
-  m_SizeDelta: {x: 412.0817, y: 151.7992}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -75.8996}
+  m_SizeDelta: {x: 800, y: 151.7992}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

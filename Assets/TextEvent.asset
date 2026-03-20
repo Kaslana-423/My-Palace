@@ -16,6 +16,6 @@ MonoBehaviour:
   eventDescription: Hello world!
   options:
   - optionText: "\u786E\u5B9A"
-    goldChange: 10
+    coinChange: 10
     populationChange: 10
     satisfactionChange: 10

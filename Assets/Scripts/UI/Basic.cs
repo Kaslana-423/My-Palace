@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-
 public class Basic : MonoBehaviour
 {
-    public TextMeshProUGUI coinText; // 显示金币数量的 UI 文本
-    public TextMeshProUGUI populationText; // 显示人口数量的 UI 文本
-    public TextMeshProUGUI personAngerText; // 显示民怨值的 UI 文本
-    public TextMeshProUGUI roundsText; // 显示轮数的 UI 文本
+    [Header("UI 组件绑定")]
+    public TextMeshProUGUI coinText;         // 显示金币
+    public TextMeshProUGUI populationText;   // 显示人口
+    public TextMeshProUGUI satisfactionText; // [修改] 显示满意度 (原民怨)
+    public TextMeshProUGUI roundsText;       // 显示轮数
 
     private void Start()
     {
         if (GameManager.HasInstance)
         {
+            // 订阅金币
             GameManager.Instance.CoinsChanged += OnCoinsChanged;
             RefreshCoinDisplay(GameManager.Instance.Coins);
+
+            // 订阅人口
             GameManager.Instance.PopulationChanged += OnPopulationChanged;
             RefreshPopulationDisplay(GameManager.Instance.Population);
-            GameManager.Instance.PersonAngerChanged += OnPersonAngerChanged;
-            RefreshPersonAngerDisplay(GameManager.Instance.PersonAnger);
+
+            // [修改] 订阅满意度
+            GameManager.Instance.SatisfactionChanged += OnSatisfactionChanged;
+            RefreshSatisfactionDisplay(GameManager.Instance.Satisfaction);
+
+            // 订阅轮数
             GameManager.Instance.RoundsChanged += OnRoundsChanged;
             RefreshRoundsDisplay(GameManager.Instance.Rounds);
         }
@@ -32,10 +39,12 @@ public class Basic : MonoBehaviour
         {
             GameManager.Instance.CoinsChanged -= OnCoinsChanged;
             GameManager.Instance.PopulationChanged -= OnPopulationChanged;
-            GameManager.Instance.PersonAngerChanged -= OnPersonAngerChanged;
+            GameManager.Instance.SatisfactionChanged -= OnSatisfactionChanged;
             GameManager.Instance.RoundsChanged -= OnRoundsChanged;
         }
     }
+
+    // --- 回调函数 ---
 
     private void OnCoinsChanged(int currentCoins)
     {
@@ -47,51 +56,47 @@ public class Basic : MonoBehaviour
         RefreshPopulationDisplay(currentPopulation);
     }
 
-    private void OnPersonAngerChanged(int currentPersonAnger)
+    // [修改] 对应变量名变更
+    private void OnSatisfactionChanged(int currentSatisfaction)
     {
-        RefreshPersonAngerDisplay(currentPersonAnger);
+        RefreshSatisfactionDisplay(currentSatisfaction);
     }
 
     private void OnRoundsChanged(int currentRounds)
     {
         RefreshRoundsDisplay(currentRounds);
     }
+
+    // --- 刷新显示 ---
+
     private void RefreshRoundsDisplay(int value)
     {
-        if (roundsText == null)
-        {
-            return;
-        }
-        Debug.Log($"刷新轮数显示: {value}");
-        roundsText.text = "第 " + value.ToString() + " 轮";
+        if (roundsText != null)
+            roundsText.text = "第 " + value.ToString() + " 轮";
     }
+
     private void RefreshCoinDisplay(int value)
     {
-        if (coinText == null)
-        {
-            return;
-        }
-        Debug.Log($"刷新金币显示: {value}");
-        coinText.text = value.ToString();
+        if (coinText != null)
+            coinText.text = value.ToString();
     }
 
     private void RefreshPopulationDisplay(int value)
     {
-        if (populationText == null)
-        {
-            return;
-        }
-        Debug.Log($"刷新人口显示: {value}");
-        populationText.text = value.ToString();
+        if (populationText != null)
+            populationText.text = value.ToString();
     }
 
-    private void RefreshPersonAngerDisplay(int value)
+    // [修改] 这里可以处理一下正负数的显示颜色，比如负数显红
+    private void RefreshSatisfactionDisplay(int value)
     {
-        if (personAngerText == null)
+        if (satisfactionText != null)
         {
-            return;
+            satisfactionText.text = value.ToString();
+            
+            // 可选：如果小于0，显示红色；否则显示白色/绿色
+            // satisfactionText.color = value < 0 ? Color.red : Color.white;
         }
-        Debug.Log($"刷新民怨显示: {value}");
-        personAngerText.text = value.ToString();
+            
     }
 }

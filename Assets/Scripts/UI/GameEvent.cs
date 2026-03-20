@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 定义单个选项的数据结构
 [System.Serializable]
 public class EventOption
 {
@@ -9,17 +8,18 @@ public class EventOption
     public string optionText;
 
     [Header("数值影响")]
-    [Tooltip("金币变化量 (+增加, -减少)")]
-    public int goldChange;
+    [Tooltip("金币 (Coin) 变化量 (+增加, -减少)")]
+    // [修改] 统一变量名 goldChange -> coinChange
+    public int coinChange; 
 
-    [Tooltip("人口变化量 (+增加, -减少)")]
+    [Tooltip("人口 (Population) 变化量 (+增加, -减少)")]
     public int populationChange;
 
-    [Tooltip("满意度/民怨变化量 (注意: +满意度通常意味着 -民怨，具体看 GameManager 逻辑)")]
+    [Tooltip("满意度 (Satisfaction) 变化量 (+满意, -愤怒)")]
+    // 逻辑已统一：正数增加满意度
     public int satisfactionChange;
 }
 
-// 定义事件主体，继承自 ScriptableObject 以便在 Project 窗口创建
 [CreateAssetMenu(fileName = "NewGameEvent", menuName = "Game/Game Event")]
 public class GameEvent : ScriptableObject
 {
