@@ -2947,8 +2947,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coins: 100
+  materials: 50
   population: 50
   satisfaction: 0
+  prosperity: 0
   rounds: 1
 --- !u!1 &931218553
 GameObject:
@@ -4090,8 +4092,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 931218555}
+  materialsText: {fileID: 0}
   populationText: {fileID: 466494346}
   satisfactionText: {fileID: 37763804}
+  prosperityText: {fileID: 0}
   roundsText: {fileID: 2133758878}
 --- !u!1 &1443138714
 GameObject:

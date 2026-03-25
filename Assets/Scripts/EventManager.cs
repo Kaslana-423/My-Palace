@@ -27,14 +27,11 @@ public class EventManager : MonoBehaviour
         {
             uiManager = FindObjectOfType<EventUIManager>();
         }
-        
-        // 方便测试
-        // Invoke("TriggerRandomEvent", 1f);
     }
 
-    // 按下 T 键测试
     private void Update()
     {
+        // 方便测试：按 T 键触发
         if (Input.GetKeyDown(KeyCode.T))
         {
             TriggerRandomEvent();
@@ -44,7 +41,7 @@ public class EventManager : MonoBehaviour
     /// <summary>
     /// 触发一个随机事件
     /// </summary>
-    [ContextMenu("Test Random Event")] // 允许在编辑器中右键测试
+    [ContextMenu("Test Random Event")]
     public void TriggerRandomEvent()
     {
         if (eventPool == null || eventPool.Count == 0) return;
@@ -60,30 +57,45 @@ public class EventManager : MonoBehaviour
     /// <summary>
     /// 结算选项带来的影响
     /// </summary>
-    /// <param name="option">玩家选择的选项数据</param>
     public void ResolveOption(EventOption option)
     {
         if (option == null) return;
+        if (!GameManager.HasInstance) return;
 
         Debug.Log($"<color=cyan>[事件结算] 玩家选择: {option.optionText}</color>");
 
-        if (GameManager.HasInstance)
-        {
-            // [修改] 1. GoldChange -> CoinChange
-            if (option.coinChange > 0)
-                GameManager.Instance.AddCoins(option.coinChange);
-            else if (option.coinChange < 0)
-                GameManager.Instance.TrySpendCoins(-option.coinChange);
+        // 1. 金币 (Coins)
+        if (option.coinChange > 0)
+            GameManager.Instance.AddCoins(option.coinChange);
+        else if (option.coinChange < 0)
+            GameManager.Instance.TrySpendCoins(-option.coinChange); // 传入正数进行扣除
 
-            // 2. Population
+        // 2. 建材 (Materials) [新增]
+        if (option.materialChange > 0)
+            GameManager.Instance.AddMaterials(option.materialChange);
+        else if (option.materialChange < 0)
+            GameManager.Instance.TrySpendMaterials(-option.materialChange);
+
+        // 3. 人口 (Population)
+        if (option.populationChange != 0)
+        {
             int newPop = GameManager.Instance.Population + option.populationChange;
             GameManager.Instance.SetPopulation(newPop);
+        }
 
-            // [修改] 3. Satisfaction
-            // 之前的逻辑是：民怨 - satisfactionChange
-            // 现在的逻辑是：满意度 + satisfactionChange (正加负减)
+        // 4. 满意度 (Satisfaction)
+        if (option.satisfactionChange != 0)
+        {
             int newSatisfaction = GameManager.Instance.Satisfaction + option.satisfactionChange;
             GameManager.Instance.SetSatisfaction(newSatisfaction);
+        }
+
+        // 5. 繁荣度 (Prosperity) [新增]
+        if (option.prosperityChange != 0)
+        {
+            // GameManager 已有 AddProsperity 方法，它内部调用了 SetProsperity(current + amount)
+            // 所以直接传入正负数即可 (e.g. AddProsperity(-5) 会减少)
+            GameManager.Instance.AddProsperity(option.prosperityChange);
         }
     }
 }
