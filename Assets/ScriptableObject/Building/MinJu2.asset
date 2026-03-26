@@ -15,9 +15,9 @@ MonoBehaviour:
   typeId: 6
   buildingName: 
   level: 0
-  costCoins: 0
-  costPopulation: 0
-  costMaterial: 0
+  costCoins: 2
+  costPopulation: 2
+  costMaterial: 2
   spendPopulation: 0
   outputPopulation: 0
   harvestMultiplier: 0
@@ -30,4 +30,4 @@ MonoBehaviour:
   previewSprite: {fileID: 192743645, guid: 89a202014acdb8a46b22f31b2648a6a0, type: 3}
   buildingTitle: 
   buildingIntro: 
-  buildingIcon: {fileID: 0}
+  buildingIcon: {fileID: 21300000, guid: 9876d742a14f8424fab3c752344822f6, type: 3}

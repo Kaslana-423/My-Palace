@@ -60,31 +60,31 @@ public class BuildingPanelUI : MonoBehaviour
         if (nextData != null)
         {
             if (upgradeButton != null) upgradeButton.interactable = true;
-            SetResourceText(coinCostText, nextData.costCoins, CostColor);
-            SetResourceText(manpowerCostText, nextData.costPopulation, CostColor);
-            SetResourceText(materialCostText, nextData.costMaterial, CostColor);
+            SetResourceText(coinCostText, nextData.costCoins, CostColor, "铜钱");
+            SetResourceText(manpowerCostText, nextData.costPopulation, CostColor, "人力");
+            SetResourceText(materialCostText, nextData.costMaterial, CostColor, "建材");
         }
         else
         {
             if (upgradeButton != null) upgradeButton.interactable = false;
-            SetResourceText(coinCostText, 0, CostColor);
-            SetResourceText(manpowerCostText, 0, CostColor);
-            SetResourceText(materialCostText, 0, CostColor);
+            SetResourceText(coinCostText, 0, CostColor, "铜钱");
+            SetResourceText(manpowerCostText, 0, CostColor, "人力");
+            SetResourceText(materialCostText, 0, CostColor, "建材");
         }
 
         // 拆除返还
-        SetResourceText(coinRefundText, data.refundCoins, RefundColor);
-        SetResourceText(manpowerRefundText, data.refundPopulation, RefundColor);
-        SetResourceText(materialRefundText, data.refundMaterial, RefundColor);
+        SetResourceText(coinRefundText, data.refundCoins, RefundColor, "铜钱");
+        SetResourceText(manpowerRefundText, data.refundPopulation, RefundColor, "人力");
+        SetResourceText(materialRefundText, data.refundMaterial, RefundColor, "建材");
     }
 
-    private void SetResourceText(TextMeshProUGUI textComp, int val, string colorHex)
+    private void SetResourceText(TextMeshProUGUI textComp, int val, string colorHex, string res)
     {
         if (textComp == null) return;
-        if (val > 0)
+        if (val >= 0)
         {
             textComp.gameObject.SetActive(true);
-            textComp.text = $"<color={colorHex}>{val}</color>";
+            textComp.text = res + " : " + $"<color={colorHex}>{val}</color>";
         }
         else
         {
@@ -97,7 +97,7 @@ public class BuildingPanelUI : MonoBehaviour
         if (BuildingInteractManager.Instance != null)
         {
             BuildingInteractManager.Instance.RequestUpgrade();
-            Debug.Log("111");
+            // Debug.Log("111");
         }
     }
 
@@ -106,7 +106,7 @@ public class BuildingPanelUI : MonoBehaviour
         if (BuildingInteractManager.Instance != null)
         {
             BuildingInteractManager.Instance.RequestDemolish();
-            Debug.Log("2322");
+            // Debug.Log("2322");
         }
     }
 }

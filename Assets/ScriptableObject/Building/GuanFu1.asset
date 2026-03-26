@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeId: 1
   buildingName: 
-  level: 0
-  costCoins: 0
-  costPopulation: 0
-  costMaterial: 0
+  level: 1
+  costCoins: 1
+  costPopulation: 1
+  costMaterial: 1
   spendPopulation: 0
   outputPopulation: 0
   harvestMultiplier: 0
   outputPersonAnger: 0
   prefab: {fileID: 7003555441519307489, guid: 3a13f6fa6615bb64180880e2f63f0f69, type: 3}
   nextLevelSO: {fileID: 11400000, guid: 503e4b95ce4fa594eb48411f84c0ef76, type: 2}
-  refundCoins: 0
-  refundPopulation: 0
-  refundMaterial: 0
+  refundCoins: 1
+  refundPopulation: 1
+  refundMaterial: 1
   previewSprite: {fileID: -1280054969, guid: 5b933e3939179084793f6d5cdf3edddd, type: 3}
-  buildingTitle: 
-  buildingIntro: 
-  buildingIcon: {fileID: 0}
+  buildingTitle: 111
+  buildingIntro: sb
+  buildingIcon: {fileID: 21300000, guid: 99957d562ad7a0c459e955453f3006c0, type: 3}

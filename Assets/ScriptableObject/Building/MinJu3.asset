@@ -30,4 +30,4 @@ MonoBehaviour:
   previewSprite: {fileID: -646620004, guid: 89a202014acdb8a46b22f31b2648a6a0, type: 3}
   buildingTitle: 
   buildingIntro: 
-  buildingIcon: {fileID: 0}
+  buildingIcon: {fileID: 21300000, guid: b97a84c75e20ebe43bf3a40975623e9c, type: 3}
