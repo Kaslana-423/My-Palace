@@ -804,8 +804,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f555e0bc10869c4abdaa28571dbd875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbors: []
-  radius: 0.5
+  neighbors:
+  - {fileID: 207001677}
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -860,7 +861,7 @@ MonoBehaviour:
   - {fileID: 339467507}
   - {fileID: 202800190}
   - {fileID: 1863350039}
-  radius: 0.5
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -1008,8 +1009,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f555e0bc10869c4abdaa28571dbd875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbors: []
-  radius: 0.5
+  neighbors:
+  - {fileID: 339467507}
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -1312,22 +1314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32a5761425758744a047124d5218bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeButton: {fileID: 937851069}
-  demolishButton: {fileID: 1669932344}
-  buildingImage: {fileID: 474148635}
-  mingju:
-  - {fileID: 21300000, guid: cc8b5927a9b27f849b300482b50292f9, type: 3}
-  - {fileID: 21300000, guid: 9876d742a14f8424fab3c752344822f6, type: 3}
-  - {fileID: 21300000, guid: b97a84c75e20ebe43bf3a40975623e9c, type: 3}
-  - {fileID: 21300000, guid: 9fe5dc0530df39844b0e02f17a59d626, type: 3}
-  guanfu:
-  - {fileID: 21300000, guid: 99957d562ad7a0c459e955453f3006c0, type: 3}
-  - {fileID: 21300000, guid: 7b17a9ac952e07a4e9c655d32c1f63a7, type: 3}
-  - {fileID: 21300000, guid: abcf40dc3982e7f41b43f4a8c6b4ac03, type: 3}
-  - {fileID: 21300000, guid: 3e82833d63e5296499c8960184162051, type: 3}
-  coinCostText: {fileID: 578578789}
-  buildingNameText: {fileID: 596104974}
-  demolishRefundText: {fileID: 194677738}
 --- !u!1 &339467506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,7 +1347,7 @@ MonoBehaviour:
   - {fileID: 235152531}
   - {fileID: 2024113131}
   - {fileID: 488628040}
-  radius: 0.5
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -1411,8 +1397,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f555e0bc10869c4abdaa28571dbd875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbors: []
-  radius: 0.5
+  neighbors:
+  - {fileID: 1207798550}
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -1971,8 +1958,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f555e0bc10869c4abdaa28571dbd875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbors: []
-  radius: 0.5
+  neighbors:
+  - {fileID: 339467507}
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -2787,8 +2775,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f555e0bc10869c4abdaa28571dbd875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbors: []
-  radius: 0.5
+  neighbors:
+  - {fileID: 1207798550}
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -2942,11 +2931,11 @@ Transform:
   m_GameObject: {fileID: 920430824}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6945898, y: -0.19051184, z: -9.945891}
+  m_LocalPosition: {x: 1.7651582, y: 11.558949, z: -8.657337}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1098569269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &920430826
 MonoBehaviour:
@@ -3268,8 +3257,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f555e0bc10869c4abdaa28571dbd875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbors: []
-  radius: 0.5
+  neighbors:
+  - {fileID: 1207798550}
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -3464,12 +3454,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055348542}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.459748, y: 11.749461, z: 1.2885538}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1098569269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1073226122
 GameObject:
@@ -3537,6 +3527,40 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1098569268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1098569269}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1098569269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098569268}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.459748, y: -11.749461, z: -1.2885538}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 920430825}
+  - {fileID: 1055348544}
+  - {fileID: 1614877110}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1099702148
@@ -3788,7 +3812,8 @@ MonoBehaviour:
   - {fileID: 342986885}
   - {fileID: 725217700}
   - {fileID: 998114254}
-  radius: 0.5
+  - {fileID: 207001677}
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -3854,14 +3879,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcTypes:
-  - name: 
+  - name: 1
     prefab: {fileID: 3994469864345338311, guid: 4aad375965158d642a4b9c513f5356ed, type: 3}
     weight: 48
-  - name: 
+  - name: 2
     prefab: {fileID: 3994469864345338311, guid: 314c0c6eb6dc0e14ebd82731cd321cdb, type: 3}
     weight: 56
-  npcPrefab: {fileID: 3994469864345338311, guid: 4aad375965158d642a4b9c513f5356ed, type: 3}
-  totalNPCCount: 50
+  - name: 3
+    prefab: {fileID: 3994469864345338311, guid: e5cc488d531dc184bb06e1dc1fe7ea39, type: 3}
+    weight: 56
+  - name: 4
+    prefab: {fileID: 3994469864345338311, guid: 5c3c9b375a1581740bad68d0ba92d7b3, type: 3}
+    weight: 56
+  - name: 5
+    prefab: {fileID: 3994469864345338311, guid: f0e07edeea0008440a17f532acbfee62, type: 3}
+    weight: 56
+  - name: 6
+    prefab: {fileID: 3994469864345338311, guid: 0c109a7aa0c7b244f8a02426df6ed397, type: 3}
+    weight: 56
+  - name: 7
+    prefab: {fileID: 3994469864345338311, guid: 53e99cf1c7d0a294f93b07d9daa41595, type: 3}
+    weight: 56
+  - name: 8
+    prefab: {fileID: 3994469864345338311, guid: 7ab98d6ca800f3140ab01212ae6074b5, type: 3}
+    weight: 56
+  - name: 9
+    prefab: {fileID: 3994469864345338311, guid: a06b7e459acbb4640a8ba13502bc405b, type: 3}
+    weight: 56
+  npcPrefab: {fileID: 0}
+  totalNPCCount: 1000
   spawnOnRoadChance: 0.8
 --- !u!1 &1372781295 stripped
 GameObject:
@@ -4211,6 +4257,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572463458}
   m_CullTransparentMesh: 1
+--- !u!1 &1614877109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1614877110}
+  - component: {fileID: 1614877111}
+  m_Layer: 0
+  m_Name: BuildingInteractManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1614877110
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614877109}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1098569269}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1614877111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614877109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b2bfee41230264f8f0e7c6ac37f10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1622048135
 GameObject:
   m_ObjectHideFlags: 0
@@ -4984,8 +5074,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f555e0bc10869c4abdaa28571dbd875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbors: []
-  radius: 0.5
+  neighbors:
+  - {fileID: 207001677}
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -5285,8 +5376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f555e0bc10869c4abdaa28571dbd875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbors: []
-  radius: 0.5
+  neighbors:
+  - {fileID: 339467507}
+  radius: 0.25
   roadWidth: 0.5
   currentOccupancy: 0
   pointColor: {r: 0, g: 1, b: 1, a: 1}
@@ -6529,10 +6621,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 920430825}
   - {fileID: 1721798688}
   - {fileID: 250747609}
   - {fileID: 569188356}
   - {fileID: 1073226125}
-  - {fileID: 1055348544}
+  - {fileID: 1098569269}
   - {fileID: 1444522209}

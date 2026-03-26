@@ -14,7 +14,7 @@ public class GridDetector : MonoBehaviour
     //[cite_start]// 0: 不可造 (含非凸多边形缺角处 [cite: 10])
     // 1: 空闲且可造
     // 2: 已有建筑占据
-    private int[,] gridState = new int[MAX_SIZE, MAX_SIZE];
+    public int[,] gridState = new int[MAX_SIZE, MAX_SIZE];
 
     private SpriteRenderer previewRenderer;
     private Vector3Int lastCellPos = new Vector3Int(-9999, -9999, 0);
@@ -131,7 +131,7 @@ public class GridDetector : MonoBehaviour
                 Vector3 spawnPos = mapGrid.CellToWorld(cellPos);
 
                 // 把 currentId 传进去执行真建造
-                bool buildSuccess = BuildManager.Instance.ExecuteBuild(currentId, spawnPos);
+                bool buildSuccess = BuildManager.Instance.ExecuteBuild(currentId, spawnPos, cellPos);
 
                 if (buildSuccess)
                 {

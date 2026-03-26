@@ -95,12 +95,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3994469864345338311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9c20c02e532b4a4e8b0956f283066c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dd9fcb2f9d9cee46bebc0cc32a56069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   baseMoveSpeed: 0.2
   minIdleTime: 0
-  maxIdleTime: 1.5
+  maxIdleTime: 1
+  separationRadius: 0.8
+  separationForce: 1.5
+  npcLayer:
+    serializedVersion: 2
+    m_Bits: 0
   sortingOrderBase: 5000
 --- !u!95 &4570959854243011992
 Animator:

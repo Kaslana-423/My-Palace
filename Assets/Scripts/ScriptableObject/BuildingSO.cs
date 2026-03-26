@@ -17,6 +17,10 @@ public class BuildingSO : ScriptableObject
     public int outputPersonAnger;
 
     public GameObject prefab;
+    public BuildingSO nextLevelSO;
+    public int refundCoins;
+    public int refundPopulation;
+    public int refundMaterial;
     [Header("表现层")]
     public Sprite previewSprite; // 专门用来做建造预览虚影的贴图
 }

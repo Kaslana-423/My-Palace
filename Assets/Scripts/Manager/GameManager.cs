@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     public event Action<int> RoundsChanged;
 
     // 建筑数据存储 (保留旧分支定义的字典)
-    public Dictionary<Vector3Int, BuildingData> buildingDataDict = new Dictionary<Vector3Int, BuildingData>();
+    // public Dictionary<Vector3Int, BuildingData> buildingDataDict = new Dictionary<Vector3Int, BuildingData>();
 
     private void Awake()
     {
@@ -63,8 +63,7 @@ public class GameManager : MonoBehaviour
 
     // --- 金币逻辑 ---
     public void AddCoins(int amount) { if (amount > 0) SetCoins(coins + amount); }
-
-    public bool TrySpendCoins(int amount) // 兼容旧接口
+    public bool TrySpendCoins(int amount)
     {
         if (amount <= 0) return true;
         if (coins < amount) return false;
@@ -82,8 +81,7 @@ public class GameManager : MonoBehaviour
 
     // --- 建材逻辑 ---
     public void AddMaterials(int amount) { if (amount > 0) SetMaterials(materials + amount); }
-
-    public bool TrySpendMaterials(int amount) // 兼容旧接口
+    public bool TrySpendMaterials(int amount)
     {
         if (amount <= 0) return true;
         if (materials < amount) return false;
@@ -100,6 +98,14 @@ public class GameManager : MonoBehaviour
     }
 
     // --- 人口逻辑 ---
+    public void AddPopulation(int amount) { if (amount > 0) SetPopulation(population + amount); }
+    public bool TrySpendPopulation(int amount)
+    {
+        if (amount <= 0) return true;
+        if (population < amount) return false;
+        SetPopulation(population - amount);
+        return true;
+    }
     public void SetPopulation(int value)
     {
         int clamped = Mathf.Max(0, value);
@@ -109,6 +115,14 @@ public class GameManager : MonoBehaviour
     }
 
     // --- 满意度/民怨逻辑 (双向兼容) ---
+    public void AddPersonAnger(int amount) { if (amount > 0) SetPersonAnger(personAnger + amount); }
+    public bool TrySpendPersonAnger(int amount)
+    {
+        if (amount <= 0) return true;
+        if (personAnger < amount) return false;
+        SetPersonAnger(personAnger - amount);
+        return true;
+    }
     public void SetSatisfaction(int value) => SetPersonAnger(value); // 旧接口映射
 
     public void SetPersonAnger(int value)
@@ -121,8 +135,14 @@ public class GameManager : MonoBehaviour
     }
 
     // --- 繁荣度逻辑 ---
-    public void AddProsperity(int amount) => SetProsperity(prosperity + amount);
-
+    public void AddProsperity(int amount) { if (amount > 0) SetProsperity(prosperity + amount); }
+    public bool TrySpendProsperity(int amount)
+    {
+        if (amount <= 0) return true;
+        if (prosperity < amount) return false;
+        SetProsperity(prosperity - amount);
+        return true;
+    }
     public void SetProsperity(int value)
     {
         int clamped = Mathf.Max(0, value);
