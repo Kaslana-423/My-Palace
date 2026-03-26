@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0403e7e6c83f4e1408d4239d3cf096d4, type: 3}
+  m_Name: MinJu3
+  m_EditorClassIdentifier: 
+  typeId: 7
+  buildingName: 
+  level: 0
+  costCoins: 0
+  costPopulation: 0
+  costMaterial: 0
+  spendPopulation: 0
+  outputPopulation: 0
+  harvestMultiplier: 0
+  outputPersonAnger: 0
+  prefab: {fileID: 3056003979317044684, guid: 3b38b5dc15a28914c8717820d44e3a8b, type: 3}
+  previewSprite: {fileID: -646620004, guid: 89a202014acdb8a46b22f31b2648a6a0, type: 3}

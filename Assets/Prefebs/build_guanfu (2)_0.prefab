@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4439108840319927401}
   - component: {fileID: 7370642726642266760}
-  - component: {fileID: -6605220854059161799}
+  - component: {fileID: -269499667002658884}
   m_Layer: 0
   m_Name: build_guanfu (2)_0
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-6605220854059161799
+--- !u!114 &-269499667002658884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,9 +94,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7003555441519307489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 288294dadc92d7c4f8f5cbfe4e9b4347, type: 3}
+  m_Script: {fileID: 11500000, guid: dd354fde37f35294883781b62cfd155b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingName: "\u5B98\u5E9C"
-  coinCost: 01000000020000000300000004000000
-  level: 0
+  data: {fileID: 0}
+  gridX: 0
+  gridY: 0

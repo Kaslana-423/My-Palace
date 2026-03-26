@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3384747163469342025}
   - component: {fileID: 2355961624490834129}
-  - component: {fileID: -9067075317209072206}
+  - component: {fileID: 2932753604851516973}
   m_Layer: 0
   m_Name: building_0
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-9067075317209072206
+--- !u!114 &2932753604851516973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,9 +94,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1162949802483977972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 288294dadc92d7c4f8f5cbfe4e9b4347, type: 3}
+  m_Script: {fileID: 11500000, guid: dd354fde37f35294883781b62cfd155b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingName: "\u6C11\u5C45"
-  coinCost: 01000000020000000300000004000000
-  level: 0
+  data: {fileID: 0}
+  gridX: 0
+  gridY: 0
