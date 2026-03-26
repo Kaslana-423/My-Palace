@@ -40,8 +40,6 @@ public class Basic : MonoBehaviour
         {
             GameManager.Instance.CoinsChanged += OnCoinsChanged;
             RefreshCoinDisplay(GameManager.Instance.Coins);
-            GameManager.Instance.ManpowerChanged += OnManpowerChanged;
-            RefreshManpowerDisplay(GameManager.Instance.Manpower);
             GameManager.Instance.MaterialsChanged += OnMaterialsChanged;
             RefreshMaterialDisplay(GameManager.Instance.Materials);
             GameManager.Instance.PopulationChanged += OnPopulationChanged;
@@ -70,7 +68,6 @@ public class Basic : MonoBehaviour
         if (GameManager.HasInstance)
         {
             GameManager.Instance.CoinsChanged -= OnCoinsChanged;
-            GameManager.Instance.ManpowerChanged -= OnManpowerChanged;
             GameManager.Instance.MaterialsChanged -= OnMaterialsChanged;
             GameManager.Instance.PopulationChanged -= OnPopulationChanged;
             GameManager.Instance.ProsperityChanged -= OnProsperityChanged;
@@ -101,7 +98,6 @@ public class Basic : MonoBehaviour
         }
 
         RefreshCoinDisplay(GameManager.Instance.Coins);
-        RefreshManpowerDisplay(GameManager.Instance.Manpower);
         RefreshMaterialDisplay(GameManager.Instance.Materials);
         RefreshPopulationDisplay(GameManager.Instance.Population);
         RefreshProsperityDisplay(GameManager.Instance.Prosperity);

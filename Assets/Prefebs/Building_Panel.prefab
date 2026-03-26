@@ -1107,7 +1107,6 @@ RectTransform:
   - {fileID: 3889736291408876970}
   - {fileID: 8227991781314916911}
   - {fileID: 4315851137951835995}
-  - {fileID: 4746305238592383387}
   m_Father: {fileID: 2251379939379467798}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1510,11 +1509,11 @@ RectTransform:
   m_LocalScale: {x: 0.22784412, y: 0.22784412, z: 0.2278441}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4696587290191546918}
+  m_Father: {fileID: 2251379939379467798}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1, y: 256}
+  m_AnchoredPosition: {x: -139.90002, y: 38.56961}
   m_SizeDelta: {x: 1195.7, y: 901.0812}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7274214289581849364
@@ -1715,7 +1714,6 @@ GameObject:
   - component: {fileID: 2251379939379467798}
   - component: {fileID: 8447014356882863396}
   - component: {fileID: 4747935105403347998}
-  - component: {fileID: 2718030866161789610}
   m_Layer: 5
   m_Name: Building_Panel
   m_TagString: Untagged
@@ -1739,6 +1737,7 @@ RectTransform:
   - {fileID: 4696587290191546918}
   - {fileID: 6413748004108782426}
   - {fileID: 6421445324985173657}
+  - {fileID: 4746305238592383387}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -1784,75 +1783,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2718030866161789610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9150697039497607153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32a5761425758744a047124d5218bab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  costCoinIcon: "[\u94DC]"
-  costManpowerIcon: "[\u4EBA]"
-  costMaterialIcon: "[\u6750]"
-  refundCoinIcon: "[\u94DC]"
-  refundManpowerIcon: "[\u4EBA]"
-  refundMaterialIcon: "[\u6750]"
-  resourceSpriteAsset: {fileID: 11400000, guid: c41005c129ba4d66911b75229fd70b45, type: 2}
-  costCoinIconImage: {fileID: 0}
-  costManpowerIconImage: {fileID: 0}
-  costMaterialIconImage: {fileID: 0}
-  refundCoinIconImage: {fileID: 0}
-  refundManpowerIconImage: {fileID: 0}
-  refundMaterialIconImage: {fileID: 0}
-  coinIconSprite: {fileID: 21300000, guid: 3c5bcf433adfa5941a81bd72837b6447, type: 3}
-  manpowerIconSprite: {fileID: 21300000, guid: 4a64510506ff3734c8de0510c55a4714, type: 3}
-  materialIconSprite: {fileID: 0}
-  resourceLineFontSize: 44
-  resourceIconSize: {x: 100, y: 100}
-  resourceIconOffset: {x: 16, y: 0}
-  upgradeButton: {fileID: 1507240021524345115}
-  demolishButton: {fileID: 1546871763008185278}
-  buildingImage: {fileID: 3273701637967782220}
-  buildingFrameImage: {fileID: 0}
-  coinCostText: {fileID: 9220729998487027740}
-  manpowerCostText: {fileID: 5265926353962598460}
-  materialCostText: {fileID: 2718127340184175734}
-  buildingNameText: {fileID: 6248985939110123148}
-  buildingIntroText: {fileID: 1238272580936665000}
-  buildModeKeyText: {fileID: 0}
-  coinRefundText: {fileID: 8240687732172092528}
-  manpowerRefundText: {fileID: 6811817244238116037}
-  materialRefundText: {fileID: 3479814826079133448}
-  panelFont: {fileID: 11400000, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
-  applyPanelFontOnRefresh: 1
-  runtimeIntroAnchoredPos: {x: 60, y: 150}
-  runtimeIntroSize: {x: 280, y: 220}
-  runtimeIntroFontSize: 24
-  runtimeIntroColor: {r: 0.92, g: 0.92, b: 0.92, a: 1}
-  runtimeIntroAlignment: 257
-  runtimeIntroWordWrap: 1
-  runtimeIntroOverflow: 0
-  runtimeIntroMargin: {x: 0, y: 0, z: 0, w: 0}
-  runtimeIntroLineSpacing: 0
-  runtimeIntroWordSpacing: 0
-  runtimeIntroCharacterSpacing: 0
-  runtimeIntroParagraphSpacing: 0
-  mingju:
-  - {fileID: 21300000, guid: cc8b5927a9b27f849b300482b50292f9, type: 3}
-  - {fileID: 21300000, guid: 9876d742a14f8424fab3c752344822f6, type: 3}
-  - {fileID: 21300000, guid: b97a84c75e20ebe43bf3a40975623e9c, type: 3}
-  - {fileID: 21300000, guid: 9fe5dc0530df39844b0e02f17a59d626, type: 3}
-  guanfu:
-  - {fileID: 21300000, guid: 99957d562ad7a0c459e955453f3006c0, type: 3}
-  - {fileID: 21300000, guid: 7b17a9ac952e07a4e9c655d32c1f63a7, type: 3}
-  - {fileID: 21300000, guid: abcf40dc3982e7f41b43f4a8c6b4ac03, type: 3}
-  - {fileID: 21300000, guid: 3e82833d63e5296499c8960184162051, type: 3}
-  enableEditorPreview: 1
-  autoRefreshPreviewOnValidate: 1
-  previewBuildingName: "\u6C11\u5C45"
-  previewLevel: 3

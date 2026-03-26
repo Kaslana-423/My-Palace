@@ -23,4 +23,11 @@ MonoBehaviour:
   harvestMultiplier: 0
   outputPersonAnger: 0
   prefab: {fileID: 4633809252817149150, guid: 2f92aee9f37333d4792d67c2163c34cd, type: 3}
+  nextLevelSO: {fileID: 11400000, guid: b77bcf770ec1ac14faec69aad2945ee8, type: 2}
+  refundCoins: 0
+  refundPopulation: 0
+  refundMaterial: 0
   previewSprite: {fileID: 192743645, guid: 89a202014acdb8a46b22f31b2648a6a0, type: 3}
+  buildingTitle: 
+  buildingIntro: 
+  buildingIcon: {fileID: 0}

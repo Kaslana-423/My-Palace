@@ -23,4 +23,8 @@ public class BuildingSO : ScriptableObject
     public int refundMaterial;
     [Header("表现层")]
     public Sprite previewSprite; // 专门用来做建造预览虚影的贴图
+    public string buildingTitle;
+    [TextArea(3, 5)]
+    public string buildingIntro;
+    public Sprite buildingIcon;
 }
