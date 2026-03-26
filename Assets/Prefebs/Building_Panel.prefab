@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b97a84c75e20ebe43bf3a40975623e9c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9fe5dc0530df39844b0e02f17a59d626, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[\u94DC]:<color=#FF5A5A>150</color>"
+  m_text: "[\u94DC]:<color=#FF5A5A>500</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
   m_sharedMaterial: {fileID: -7961473984227659526, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[\u4EBA]:<color=#FF5A5A>150</color>"
+  m_text: "[\u4EBA]:<color=#FF5A5A>500</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
   m_sharedMaterial: {fileID: -7961473984227659526, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
@@ -542,7 +542,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[\u6750]:<color=#FF5A5A>5</color>"
+  m_text: "[\u6750]:<color=#FF5A5A>20</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
   m_sharedMaterial: {fileID: -7961473984227659526, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
@@ -676,7 +676,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u6C11\u5C45\u4E39\u6979"
+  m_text: "\u6C11\u5C45\u6781\u5236"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
   m_sharedMaterial: {fileID: -7961473984227659526, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
@@ -947,7 +947,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u591A\u8FDB\u9662\u843D\uFF0C\u9752\u7816\u9EDB\u74E6\uFF0C\u6728\u6784\u6881\u67B6\u65BD\u4EE5\u96D5\u523B\u3002\u529F\u80FD\u5206\u533A\u660E\u786E\uFF0C\u8BBE\u5385\u5802\u3001\u4E66\u658B\u3001\u5185\u7737\u5C45\u5BA4\uFF0C\u4F53\u73B0\u5BCC\u8DB3\u751F\u6D3B\u3002"
+  m_text: "\u591A\u8DEF\u591A\u8FDB\uFF0C\u9AD8\u5899\u6DF1\u9662\uFF0C\u5EFA\u6709\u4EAD\u53F0\u697C\u9601\u3002\u96D5\u6881\u753B\u680B\uFF0C\u88C5\u9970\u7E41\u4E3D\uFF0C\u5360\u5730\u5E7F\u9614\uFF0C\u4E3A\u4E16\u5BB6\u671B\u65CF\u5C45\u4F4F\u7684\u5927\u578B\u5E9C\u90B8\u3002"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
   m_sharedMaterial: {fileID: -7961473984227659526, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
@@ -1081,7 +1081,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[\u94DC]:<color=#63D66B>112</color>"
+  m_text: "[\u94DC]:<color=#63D66B>375</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
   m_sharedMaterial: {fileID: -7961473984227659526, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
@@ -1215,7 +1215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[\u4EBA]:<color=#63D66B>112</color>"
+  m_text: "[\u4EBA]:<color=#63D66B>375</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
   m_sharedMaterial: {fileID: -7961473984227659526, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
@@ -1349,7 +1349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[\u6750]:<color=#63D66B>4</color>"
+  m_text: "[\u6750]:<color=#63D66B>15</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
   m_sharedMaterial: {fileID: -7961473984227659526, guid: 87939f7acfb060b469f904f8dc079c56, type: 2}
@@ -1839,4 +1839,4 @@ MonoBehaviour:
   enableEditorPreview: 1
   autoRefreshPreviewOnValidate: 1
   previewBuildingName: "\u6C11\u5C45"
-  previewLevel: 2
+  previewLevel: 3
