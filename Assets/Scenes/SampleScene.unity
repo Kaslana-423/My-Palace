@@ -955,6 +955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250aed2c4e8982a4e805cb4035283f53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeBuffs: []
 --- !u!1001 &753131143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1284,8 +1285,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventPool:
-  - {fileID: 11400000, guid: 4d4aeaac898151f4bae07ae61c1dd243, type: 2}
+  - {fileID: 11400000, guid: 99c2192f450c54e408aa587df48a1677, type: 2}
+  - {fileID: 11400000, guid: a2ae322111215484bb948a87638b1800, type: 2}
+  - {fileID: 11400000, guid: 8a637dfabdc75f5429188691912025d7, type: 2}
+  - {fileID: 11400000, guid: 3768dd6a93c94ca40be0fff53e493129, type: 2}
+  - {fileID: 11400000, guid: 1a0fffc9eb4862948b1f92ee53de1b9c, type: 2}
   uiManager: {fileID: 1443138715}
+  baseTurnProbability: 0.15
+  prdTurnIncrement: 0.05
+  baseActionProbability: 0.05
+  prdActionIncrement: 0.02
+  globalCooldownRounds: 2
 --- !u!4 &1055348544
 Transform:
   m_ObjectHideFlags: 0

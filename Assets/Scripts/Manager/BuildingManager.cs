@@ -54,6 +54,11 @@ public class BuildManager : MonoBehaviour
                 RegisterBuilding(cellPos, entity);
             }
 
+            if (EventManager.Instance != null)
+            {
+                EventManager.Instance.CheckActionTrigger();
+            }
+
             return true;
         }
 

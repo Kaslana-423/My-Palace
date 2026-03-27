@@ -26,117 +26,101 @@ public class EventBatchGenerator : EditorWindow
         outputFolder = EditorGUILayout.TextField("SO 输出文件夹:", outputFolder);
 
         EditorGUILayout.Space();
-        EditorGUILayout.HelpBox("提示：\n直接从 Excel 复制表格内容，粘贴到 TXT 文件中即可（自动识别制表符 \\t）。\n第一行将被视为表头跳过。", MessageType.Info);
-
-        if (GUILayout.Button("开始批量生成", GUILayout.Height(40)))
-        {
-            GenerateEvents();
-        }
+        
+        if (GUILayout.Button("开始批量生成", GUILayout.Height(40))) GenerateEvents();
     }
 
     private void GenerateEvents()
     {
-        if (dataFile == null)
-        {
-            EditorUtility.DisplayDialog("错误", "请先拖入数据 TXT 文件！", "确定");
-            return;
-        }
+        if (dataFile == null) return;
 
         // 检查并创建输出文件夹
         if (!AssetDatabase.IsValidFolder(outputFolder))
         {
-            string parentFolder = Path.GetDirectoryName(outputFolder).Replace("\\", "/");
-            string newFolder = Path.GetFileName(outputFolder);
-            if (AssetDatabase.IsValidFolder(parentFolder))
-            {
-                AssetDatabase.CreateFolder(parentFolder, newFolder);
-            }
-            else
-            {
-                EditorUtility.DisplayDialog("错误", "目标路径无效，请手动创建该文件夹。默认建议：Assets/GameEvents", "确定");
-                return;
-            }
+            string pFolder = Path.GetDirectoryName(outputFolder).Replace("\\", "/");
+            string nFolder = Path.GetFileName(outputFolder);
+            AssetDatabase.CreateFolder(pFolder, nFolder);
         }
 
         // 按行分割文本
         string[] lines = dataFile.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-
         GameEvent currentEvent = null;
         int generatedCount = 0;
 
-        for (int i = 1; i < lines.Length; i++) // 从 i=1 开始，跳过第一行的表头
+        for (int i = 1; i < lines.Length; i++) 
         {
-            // 这是从 Excel 复制的 TXT 默认的分隔符：制表符 \t
-            string[] columns = lines[i].Split('\t');
+            string[] cols = lines[i].Split('\t');
+            if (cols.Length < 10) continue; // 至少保证有基础数值项才解析
 
-            // 如果列数不够 9 列，忽略这一行
-            if (columns.Length < 9) continue;
+            string eTitle = cols[0].Trim();
+            string eDesc = cols[1].Trim();
+            int weight = ParseInt(cols[2], 100);
 
-            string eventTitle = columns[0].Trim();
-            string eventDesc = columns[1].Trim();
+            string oText = cols[3].Trim();
+            string oDesc = cols[4].Trim();
 
-            string optText = columns[2].Trim();
-            string optDesc = columns[3].Trim();
+            // 立即生效数值
+            int cCoin = ParseInt(cols[5]), cMat = ParseInt(cols[6]), cPop = ParseInt(cols[7]), cPros = ParseInt(cols[8]), cAng = ParseInt(cols[9]);
 
-            int coin = ParseInt(columns[4]);
-            int mat = ParseInt(columns[5]);
-            int pop = ParseInt(columns[6]);
-            int pros = ParseInt(columns[7]);
-            int anger = ParseInt(columns[8]);
-
-            // 如果读取到了非空的“事件标题”，说明是一个新事件，需要创建新的 SO
-            if (!string.IsNullOrEmpty(eventTitle))
+            if (!string.IsNullOrEmpty(eTitle))
             {
                 currentEvent = ScriptableObject.CreateInstance<GameEvent>();
-                currentEvent.eventTitle = eventTitle;
-                currentEvent.eventDescription = eventDesc;
+                currentEvent.eventTitle = eTitle;
+                currentEvent.eventDescription = eDesc;
+                currentEvent.weight = weight;
                 currentEvent.options = new List<EventOption>();
 
-                // 安全的文件名，去除特殊字符
-                string safeFileName = eventTitle.Replace(":", "_").Replace("/", "_").Replace("\\", "_");
-                string assetPath = $"{outputFolder}/Event_{safeFileName}.asset";
-
-                // 解决重名覆盖问题
-                assetPath = AssetDatabase.GenerateUniqueAssetPath(assetPath);
-
-                AssetDatabase.CreateAsset(currentEvent, assetPath);
+                string safeName = eTitle.Replace(":", "_").Replace("/", "_").Replace("\\", "_");
+                string path = AssetDatabase.GenerateUniqueAssetPath($"{outputFolder}/Event_{safeName}.asset");
+                AssetDatabase.CreateAsset(currentEvent, path);
                 generatedCount++;
             }
 
-            // 给当前事件添加选项内容
-            if (currentEvent != null && !string.IsNullOrEmpty(optText))
+            if (currentEvent != null && !string.IsNullOrEmpty(oText))
             {
-                EventOption newOption = new EventOption
+                EventOption opt = new EventOption
                 {
-                    optionText = optText,
-                    optionDescription = optDesc,
-                    coinChange = coin,
-                    materialChange = mat,
-                    populationChange = pop,
-                    prosperityChange = pros,
-                    personAngerChange = anger
+                    optionText = oText,
+                    optionDescription = oDesc,
+                    coinChange = cCoin, materialChange = cMat, populationChange = cPop, prosperityChange = cPros, personAngerChange = cAng,
+                    buffResult = new GlobalBuff()
                 };
-                currentEvent.options.Add(newOption);
 
-                // 标记该 SO 已经被修改并需要保存
+                // ---- 解析后排的 Buff 字段 (可选) ----
+                // 如果 Excel 列数达到了 22 列，说明有配 Buff 数据
+                if (cols.Length >= 22)
+                {
+                    opt.hasBuff = ParseInt(cols[10], 0) == 1; // 填 1 就是 true
+                    if (opt.hasBuff)
+                    {
+                        opt.buffResult.remainRounds = ParseInt(cols[11], 0);
+
+                        opt.buffResult.coinMult = ParseFloat(cols[12], 1f);
+                        opt.buffResult.coinAdd = ParseInt(cols[13], 0);
+
+                        opt.buffResult.materialMult = ParseFloat(cols[14], 1f);
+                        opt.buffResult.materialAdd = ParseInt(cols[15], 0);
+
+                        opt.buffResult.popMult = ParseFloat(cols[16], 1f);
+                        opt.buffResult.popAdd = ParseInt(cols[17], 0);
+
+                        opt.buffResult.prosMult = ParseFloat(cols[18], 1f);
+                        opt.buffResult.prosAdd = ParseInt(cols[19], 0);
+
+                        opt.buffResult.angerMult = ParseFloat(cols[20], 1f);
+                        opt.buffResult.angerAdd = ParseInt(cols[21], 0);
+                    }
+                }
+                
+                currentEvent.options.Add(opt);
                 EditorUtility.SetDirty(currentEvent);
             }
         }
-
-        // 统一保存所有新创建的资产
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-
-        EditorUtility.DisplayDialog("完成", $"批量生成已完成！\n共生成了 {generatedCount} 个事件 SO 文件。\n请前往 {outputFolder} 查看。", "太棒了");
+        EditorUtility.DisplayDialog("完成", $"成功生成 {generatedCount} 个事件SO。", "确定");
     }
 
-    // 辅助解析：即使 Excel 里填空了，也默认转为 0
-    private int ParseInt(string value)
-    {
-        if (int.TryParse(value.Trim(), out int result))
-        {
-            return result;
-        }
-        return 0;
-    }
+    private int ParseInt(string val, int def = 0) { return int.TryParse(val.Trim(), out int res) ? res : def; }
+    private float ParseFloat(string val, float def = 1f) { return float.TryParse(val.Trim(), out float res) ? res : def; }
 }

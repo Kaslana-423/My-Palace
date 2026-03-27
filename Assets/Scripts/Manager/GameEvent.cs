@@ -4,29 +4,24 @@ using UnityEngine;
 [System.Serializable]
 public class EventOption
 {
-    [Tooltip("选项显示的文本")]
     public string optionText;
+    [TextArea(2, 5)] public string optionDescription;
+    
+    [Header("立即生效：核心资源变更")]
+    [Tooltip("金币临时增减")] public int coinChange; 
+    [Tooltip("建材临时增减")] public int materialChange; 
+    [Tooltip("人口临时增减")] public int populationChange;
 
-    [Tooltip("后果描述文字 (鼠标悬停时显示)")]
-    [TextArea(2, 5)]
-    public string optionDescription; // [新增字段]
+    [Header("立即生效：城市数值变更")]
+    [Tooltip("繁荣度临时增减")] public int prosperityChange; 
+    [Tooltip("民怨临时增减")] public int personAngerChange; 
 
-    [Header("核心资源变更")]
-    [Tooltip("金币 (Coin) 变化量 (+增加, -减少)")]
-    public int coinChange; 
-
-    [Tooltip("建材 (Materials) 变化量 (+增加, -减少)")]
-    public int materialChange; 
-
-    [Tooltip("人口 (Population) 变化量 (+增加, -减少)")]
-    public int populationChange;
-
-    [Header("城市数值变更")]
-    [Tooltip("繁荣度 (Prosperity) 变化量 (+增加, -衰退)")]
-    public int prosperityChange; 
-
-    [Tooltip("民怨 (Person Anger) 变化量 (+增加民怨, -减少民怨)")]
-    public int personAngerChange; // [修改] 统一为民怨
+    [Header("持续生效：结算 Buff (可选)")]
+    [Tooltip("勾选后，该选项将额外施加一个全局 Buff")]
+    public bool hasBuff;
+    
+    [Tooltip("配置 Buff 的详细数值")]
+    public GlobalBuff buffResult = new GlobalBuff(); 
 }
 
 [CreateAssetMenu(fileName = "NewGameEvent", menuName = "Game/Game Event")]
@@ -34,9 +29,10 @@ public class GameEvent : ScriptableObject
 {
     [Header("事件基本信息")]
     public string eventTitle;
-
-    [TextArea(3, 10)]
-    public string eventDescription;
+    [TextArea(3, 10)] public string eventDescription;
+    
+    [Tooltip("抽取权重，数值越大越容易被抽中（默认100）")]
+    public int weight = 100;
 
     [Header("选项列表")]
     public List<EventOption> options;
