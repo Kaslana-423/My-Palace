@@ -26,6 +26,10 @@ public class EventManager : MonoBehaviour
         if (uiManager == null)
         {
             uiManager = FindObjectOfType<EventUIManager>();
+            if (uiManager == null)
+            {
+                Debug.LogError("[EventManager] 场景中找不到 EventUIManager！");
+            }
         }
     }
 
@@ -44,23 +48,31 @@ public class EventManager : MonoBehaviour
     [ContextMenu("Test Random Event")]
     public void TriggerRandomEvent()
     {
-        if (eventPool == null || eventPool.Count == 0) return;
+        if (eventPool == null || eventPool.Count == 0)
+        {
+            Debug.LogWarning("[EventManager] 事件池为空！");
+            return;
+        }
         if (uiManager == null) return;
 
         int randomIndex = Random.Range(0, eventPool.Count);
         GameEvent selectedEvent = eventPool[randomIndex];
 
         uiManager.ShowEvent(selectedEvent);
-        Debug.Log($"触发事件: {selectedEvent.eventTitle}");
+        // Debug.Log($"触发事件: {selectedEvent.eventTitle}");
     }
 
     /// <summary>
-    /// 结算选项带来的影响
+    /// 结算选项带来的影响 (核心对接点)
     /// </summary>
     public void ResolveOption(EventOption option)
     {
         if (option == null) return;
-        if (!GameManager.HasInstance) return;
+        if (!GameManager.HasInstance)
+        {
+            Debug.LogError("[EventManager] 找不到 GameManager，无法结算资源！");
+            return;
+        }
 
         Debug.Log($"<color=cyan>[事件结算] 玩家选择: {option.optionText}</color>");
 
@@ -68,9 +80,9 @@ public class EventManager : MonoBehaviour
         if (option.coinChange > 0)
             GameManager.Instance.AddCoins(option.coinChange);
         else if (option.coinChange < 0)
-            GameManager.Instance.TrySpendCoins(-option.coinChange); // 传入正数进行扣除
+            GameManager.Instance.TrySpendCoins(-option.coinChange); // 传入正数扣除
 
-        // 2. 建材 (Materials) [新增]
+        // 2. 建材 (Materials)
         if (option.materialChange > 0)
             GameManager.Instance.AddMaterials(option.materialChange);
         else if (option.materialChange < 0)
@@ -83,19 +95,22 @@ public class EventManager : MonoBehaviour
             GameManager.Instance.SetPopulation(newPop);
         }
 
-        // 4. 满意度 (Satisfaction)
-        if (option.satisfactionChange != 0)
-        {
-            int newSatisfaction = GameManager.Instance.Satisfaction + option.satisfactionChange;
-            GameManager.Instance.SetSatisfaction(newSatisfaction);
-        }
-
-        // 5. 繁荣度 (Prosperity) [新增]
+        // 4. 繁荣度 (Prosperity)
         if (option.prosperityChange != 0)
         {
-            // GameManager 已有 AddProsperity 方法，它内部调用了 SetProsperity(current + amount)
-            // 所以直接传入正负数即可 (e.g. AddProsperity(-5) 会减少)
+            // GameManager 如果用的是 AddProsperity：
             GameManager.Instance.AddProsperity(option.prosperityChange);
+            
+            // 如果 GameManager 里只有 SetProsperity，则用下面这行：
+            // int newProsperity = GameManager.Instance.Prosperity + option.prosperityChange;
+            // GameManager.Instance.SetProsperity(newProsperity);
+        }
+
+        // 5. 民怨 (Person Anger) [已对齐]
+        if (option.personAngerChange != 0)
+        {
+            int newAnger = GameManager.Instance.PersonAnger + option.personAngerChange;
+            GameManager.Instance.SetPersonAnger(newAnger);
         }
     }
 }

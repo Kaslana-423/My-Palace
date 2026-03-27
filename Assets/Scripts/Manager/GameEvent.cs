@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 定义单个选项的数据结构
 [System.Serializable]
 public class EventOption
 {
@@ -13,20 +12,19 @@ public class EventOption
     public int coinChange; 
 
     [Tooltip("建材 (Materials) 变化量 (+增加, -减少)")]
-    public int materialChange; // [新增]
+    public int materialChange; 
 
     [Tooltip("人口 (Population) 变化量 (+增加, -减少)")]
     public int populationChange;
 
     [Header("城市数值变更")]
-    [Tooltip("满意度 (Satisfaction) 变化量 (+满意, -愤怒)")]
-    public int satisfactionChange;
-
     [Tooltip("繁荣度 (Prosperity) 变化量 (+增加, -衰退)")]
-    public int prosperityChange; // [新增]
+    public int prosperityChange; 
+
+    [Tooltip("民怨 (Person Anger) 变化量 (+增加民怨, -减少民怨)")]
+    public int personAngerChange; // [修改] 统一为民怨
 }
 
-// 定义事件主体
 [CreateAssetMenu(fileName = "NewGameEvent", menuName = "Game/Game Event")]
 public class GameEvent : ScriptableObject
 {

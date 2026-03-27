@@ -2169,7 +2169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventPool:
-  - {fileID: 11400000, guid: 5f2c5792d5989114594167893ecc79aa, type: 2}
+  - {fileID: 11400000, guid: 197bce15334d6734eacd413b632aa7a8, type: 2}
   uiManager: {fileID: 1443138715}
 --- !u!4 &1055348544
 Transform:
@@ -2680,17 +2680,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4797760435925938581, guid: 54aecc78acb74f5458b5263d7a7d4a36, type: 3}
   m_PrefabInstance: {fileID: 1192154772}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1192154774 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 721381950508096409, guid: 54aecc78acb74f5458b5263d7a7d4a36, type: 3}
-  m_PrefabInstance: {fileID: 1192154772}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 247741322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1192154777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2703,18 +2692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e72653dfe4f454991c5ba1d854db76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceGridLayout: {fileID: 1192154774}
-  applyLayoutOnStart: 1
-  applyLayoutOnValidate: 1
-  itemCellSize: {x: 120, y: 120}
-  itemSpacing: {x: 120, y: 50}
-  coinFormat: '{0}'
-  manpowerFormat: '{0}'
-  materialFormat: '{0}'
-  populationFormat: '{0}'
-  prosperityFormat: '{0}'
-  personAngerFormat: '{0}%'
-  roundsFormat: "\u7B2C {0} \u8F6E"
   coinText: {fileID: 1887233508}
   materialText: {fileID: 1649352884}
   populationText: {fileID: 1268693694}
@@ -5032,7 +5009,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 859202034}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3189766821105051217, guid: 641b841b86f8fe74a92a47a260552ad9, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 641b841b86f8fe74a92a47a260552ad9, type: 3}

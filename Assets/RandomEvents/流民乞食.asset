@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85984fbb91f2d64b89411aa3d236ab2, type: 3}
+  m_Name: "\u6D41\u6C11\u4E5E\u98DF"
+  m_EditorClassIdentifier: 
+  eventTitle: "\u6D41\u6C11\u4E5E\u98DF"
+  eventDescription: "\u90BB\u53BF\u707E\u8352\uFF0C\u5927\u6279\u6D41\u6C11\u805A\u4E8E\u57CE\u5916\u4E5E\u98DF\uFF0C\u7B49\u5F85\u5B98\u5E9C\u53D1\u843D\u3002"
+  options:
+  - optionText: "\u65BD\u7CA5\u8D48\u6D4E"
+    coinChange: 0
+    materialChange: 0
+    populationChange: 0
+    prosperityChange: 0
+    personAngerChange: 0
