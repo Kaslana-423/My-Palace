@@ -16,6 +16,7 @@ MonoBehaviour:
   eventDescription: "\u90BB\u53BF\u707E\u8352\uFF0C\u5927\u6279\u6D41\u6C11\u805A\u4E8E\u57CE\u5916\u4E5E\u98DF\uFF0C\u7B49\u5F85\u5B98\u5E9C\u53D1\u843D\u3002"
   options:
   - optionText: "\u65BD\u7CA5\u8D48\u6D4E"
+    optionDescription: "\u7684hi\u54E6\u554A\u65F6\u4EE3\n"
     coinChange: 0
     materialChange: 0
     populationChange: 0

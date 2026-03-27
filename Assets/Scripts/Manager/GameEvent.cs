@@ -7,6 +7,10 @@ public class EventOption
     [Tooltip("选项显示的文本")]
     public string optionText;
 
+    [Tooltip("后果描述文字 (鼠标悬停时显示)")]
+    [TextArea(2, 5)]
+    public string optionDescription; // [新增字段]
+
     [Header("核心资源变更")]
     [Tooltip("金币 (Coin) 变化量 (+增加, -减少)")]
     public int coinChange; 
