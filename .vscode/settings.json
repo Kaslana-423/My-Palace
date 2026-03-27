@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "My-Palace.sln"
+    "dotnet.defaultSolution": "My-Palace-main.sln"
 }
