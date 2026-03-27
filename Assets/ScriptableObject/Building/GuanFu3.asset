@@ -13,21 +13,25 @@ MonoBehaviour:
   m_Name: GuanFu3
   m_EditorClassIdentifier: 
   typeId: 3
-  buildingName: 
-  level: 0
-  costCoins: 0
-  costPopulation: 0
-  costMaterial: 0
-  spendPopulation: 0
+  buildingName: "\u5B98\u5E9C\u56DB\u54C1"
+  level: 3
+  costCoins: 450
+  costPopulation: 450
+  costMaterial: 10
+  spendPopulation: 180
+  outputCoins: 0
   outputPopulation: 0
-  harvestMultiplier: 0
-  outputPersonAnger: 0
+  outputMaterial: 0
+  outputProsperity: 0
+  outputPersonAnger: 6
+  harvestMultiplier: 40
+  isHarvester: 1
   prefab: {fileID: 3336987522902547431, guid: 3d0d6d9d1a60be148b01b16eeb746bea, type: 3}
   nextLevelSO: {fileID: 11400000, guid: c1e1e47be917ca04989d6d4eaa7fc8ee, type: 2}
-  refundCoins: 0
-  refundPopulation: 0
-  refundMaterial: 0
+  refundCoins: 456
+  refundPopulation: 480
+  refundMaterial: 8
   previewSprite: {fileID: -1735908212, guid: 5b933e3939179084793f6d5cdf3edddd, type: 3}
-  buildingTitle: 
-  buildingIntro: 
+  buildingTitle: "\u5B98\u5E9C\u56DB\u54C1"
+  buildingIntro: "\u89C4\u6A21\u5B8F\u5927\uFF0C\u591A\u8DEF\u591A\u8FDB\uFF0C\u5EFA\u6709\u91CD\u6A90\u5927\u5802\u4E0E\u9644\u5C5E\u9662\u843D\u3002\u53F0\u57FA\u8F83\u9AD8\uFF0C\u88C5\u9970\u7CBE\u7F8E\uFF0C\u53EF\u4E3E\u884C\u5927\u578B\u653F\u52A1\u4E0E\u793C\u4EEA\u6D3B\u52A8\u3002"
   buildingIcon: {fileID: 21300000, guid: abcf40dc3982e7f41b43f4a8c6b4ac03, type: 3}

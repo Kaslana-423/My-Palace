@@ -3,21 +3,27 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewBuildingData", menuName = "GameData/BuildingData")]
 public class BuildingSO : ScriptableObject
 {
+    [Header("基本信息")]
     public int typeId;
     public string buildingName;
     public int level;
-
+    [Header("建造消耗")]
     public int costCoins;
     public int costPopulation;
     public int costMaterial;
-
+    [Header("回合信息")]
     public int spendPopulation;
+    public int outputCoins;
     public int outputPopulation;
-    public int harvestMultiplier;
+    public int outputMaterial;
+    public int outputProsperity;
     public int outputPersonAnger;
+    public int harvestMultiplier;
+    public bool isHarvester;
 
     public GameObject prefab;
     public BuildingSO nextLevelSO;
+    [Header("拆除返回")]
     public int refundCoins;
     public int refundPopulation;
     public int refundMaterial;

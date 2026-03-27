@@ -13,21 +13,25 @@ MonoBehaviour:
   m_Name: MinJu3
   m_EditorClassIdentifier: 
   typeId: 7
-  buildingName: 
-  level: 0
-  costCoins: 0
-  costPopulation: 0
-  costMaterial: 0
+  buildingName: "\u6C11\u5C45\u4E39\u6979"
+  level: 3
+  costCoins: 150
+  costPopulation: 150
+  costMaterial: 5
   spendPopulation: 0
+  outputCoins: 120
   outputPopulation: 0
-  harvestMultiplier: 0
+  outputMaterial: 0
+  outputProsperity: 0
   outputPersonAnger: 0
+  harvestMultiplier: 0
+  isHarvester: 0
   prefab: {fileID: 3056003979317044684, guid: 3b38b5dc15a28914c8717820d44e3a8b, type: 3}
   nextLevelSO: {fileID: 11400000, guid: d04805831d937a341ba72022d2a470bb, type: 2}
-  refundCoins: 0
-  refundPopulation: 0
-  refundMaterial: 0
+  refundCoins: 176
+  refundPopulation: 152
+  refundMaterial: 4
   previewSprite: {fileID: -646620004, guid: 89a202014acdb8a46b22f31b2648a6a0, type: 3}
-  buildingTitle: 
-  buildingIntro: 
+  buildingTitle: "\u6C11\u5C45\u4E39\u6979"
+  buildingIntro: "\u591A\u8FDB\u9662\u843D\uFF0C\u9752\u7816\u9EDB\u74E6\uFF0C\u6728\u6784\u6881\u67B6\u65BD\u4EE5\u96D5\u523B\u3002\u529F\u80FD\u5206\u533A\u660E\u786E\uFF0C\u8BBE\u5385\u5802\u3001\u4E66\u658B\u3001\u5185\u7737\u5C45\u5BA4\uFF0C\u4F53\u73B0\u5BCC\u8DB3\u751F\u6D3B\u3002"
   buildingIcon: {fileID: 21300000, guid: b97a84c75e20ebe43bf3a40975623e9c, type: 3}
