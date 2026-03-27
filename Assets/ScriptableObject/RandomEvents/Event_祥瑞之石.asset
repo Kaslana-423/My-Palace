@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85984fbb91f2d64b89411aa3d236ab2, type: 3}
+  m_Name: "Event_\u7965\u745E\u4E4B\u77F3"
+  m_EditorClassIdentifier: 
+  eventTitle: "\u7965\u745E\u4E4B\u77F3"
+  eventDescription: "\u5DE5\u5320\u7834\u571F\u65F6\u6398\u51FA\u5947\u5F02\u5DE8\u77F3\uFF0C\u574A\u95F4\u4F20\u4E3A\u7965\u745E\u4E4B\u5146\u3002"
+  weight: 80
+  options:
+  - optionText: "\u7B51\u53F0\u4F9B\u5949"
+    optionDescription: "\u6D88\u8017 40 \u94DC\u94B1\u3002\u83B7\u5F97 15 \u70B9\u7E41\u8363\u5EA6\u3002"
+    coinChange: -40
+    materialChange: 0
+    populationChange: 0
+    prosperityChange: 15
+    personAngerChange: 0
+    hasBuff: 0
+    buffResult:
+      coinMult: 1
+      coinAdd: 0
+      materialMult: 1
+      materialAdd: 0
+      popMult: 1
+      popAdd: 0
+      prosMult: 1
+      prosAdd: 0
+      angerMult: 1
+      angerAdd: 0
+      remainRounds: 0
+  - optionText: "\u51FF\u788E\u94FA\u8DEF"
+    optionDescription: "\u83B7\u5F97 10 \u4EBA\u529B\u3002\u589E\u52A0 5 \u70B9\u6C11\u6028\u503C\u3002"
+    coinChange: 0
+    materialChange: 0
+    populationChange: 10
+    prosperityChange: 0
+    personAngerChange: 5
+    hasBuff: 0
+    buffResult:
+      coinMult: 1
+      coinAdd: 0
+      materialMult: 1
+      materialAdd: 0
+      popMult: 1
+      popAdd: 0
+      prosMult: 1
+      prosAdd: 0
+      angerMult: 1
+      angerAdd: 0
+      remainRounds: 0
+  - optionText: "\u552E\u4E88\u5BCC\u5546"
+    optionDescription: "\u83B7\u5F97 50 \u94DC\u94B1\u3002\u6263\u9664 5 \u70B9\u7E41\u8363\u5EA6\u3002"
+    coinChange: 50
+    materialChange: 0
+    populationChange: 0
+    prosperityChange: -5
+    personAngerChange: 0
+    hasBuff: 0
+    buffResult:
+      coinMult: 1
+      coinAdd: 0
+      materialMult: 1
+      materialAdd: 0
+      popMult: 1
+      popAdd: 0
+      prosMult: 1
+      prosAdd: 0
+      angerMult: 1
+      angerAdd: 0
+      remainRounds: 0

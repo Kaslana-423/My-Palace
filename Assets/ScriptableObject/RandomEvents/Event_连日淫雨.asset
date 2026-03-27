@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85984fbb91f2d64b89411aa3d236ab2, type: 3}
+  m_Name: "Event_\u8FDE\u65E5\u6DEB\u96E8"
+  m_EditorClassIdentifier: 
+  eventTitle: "\u8FDE\u65E5\u6DEB\u96E8"
+  eventDescription: "\u8FDE\u65E5\u66B4\u96E8\u5F15\u53D1\u5185\u6D9D\uFF0C\u90E8\u5206\u519C\u7530\u4E0E\u4F5C\u574A\u9762\u4E34\u51CF\u4EA7\u98CE\u9669\u3002"
+  weight: 100
+  options:
+  - optionText: "\u51FA\u8D44\u62A2\u4FEE"
+    optionDescription: "\u6D88\u8017 30 \u94DC\u94B1\u3002\u672C\u6B21\u6536\u83B7\u7684\u94DC\u94B1\u4EA7\u51FA\u7EDD\u5BF9\u503C\u589E\u52A0
+      20%\u3002"
+    coinChange: -30
+    materialChange: 0
+    populationChange: 0
+    prosperityChange: 0
+    personAngerChange: 0
+    hasBuff: 1
+    buffResult:
+      coinMult: 1.2
+      coinAdd: 0
+      materialMult: 0
+      materialAdd: 0
+      popMult: 0
+      popAdd: 0
+      prosMult: 0
+      prosAdd: 0
+      angerMult: 0
+      angerAdd: 0
+      remainRounds: 1
+  - optionText: "\u5F81\u8C03\u6C11\u592B\u6392\u6C34"
+    optionDescription: "\u6D88\u8017 20 \u4EBA\u529B\u3002\u672C\u6B21\u6536\u83B7\u4E0D\u53D7\u66B4\u96E8\u5F71\u54CD\uFF0C\u589E\u52A0
+      5 \u70B9\u6C11\u6028\u503C\u3002"
+    coinChange: 0
+    materialChange: 0
+    populationChange: -20
+    prosperityChange: 0
+    personAngerChange: 5
+    hasBuff: 0
+    buffResult:
+      coinMult: 1
+      coinAdd: 0
+      materialMult: 1
+      materialAdd: 0
+      popMult: 1
+      popAdd: 0
+      prosMult: 1
+      prosAdd: 0
+      angerMult: 1
+      angerAdd: 0
+      remainRounds: 0
+  - optionText: "\u542C\u4E4B\u4EFB\u4E4B"
+    optionDescription: "\u672C\u6B21\u6536\u83B7\u7684\u6240\u6709\u8D44\u6E90\u4EA7\u51FA\u964D\u4F4E
+      30%\u3002\u6D88\u9664 5 \u70B9\u6C11\u6028\u503C\u3002"
+    coinChange: 0
+    materialChange: 0
+    populationChange: 0
+    prosperityChange: 0
+    personAngerChange: -5
+    hasBuff: 1
+    buffResult:
+      coinMult: 0.7
+      coinAdd: 0
+      materialMult: 0
+      materialAdd: 0
+      popMult: 0.7
+      popAdd: 0
+      prosMult: 0
+      prosAdd: 0
+      angerMult: 0
+      angerAdd: 0
+      remainRounds: 1
