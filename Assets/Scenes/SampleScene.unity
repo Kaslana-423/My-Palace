@@ -1171,6 +1171,56 @@ MonoBehaviour:
   pointColor: {r: 0, g: 1, b: 1, a: 1}
   roadColor: {r: 0, g: 1, b: 0, a: 0.3}
   showGizmos: 1
+--- !u!1 &518447970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 518447971}
+  - component: {fileID: 518447972}
+  m_Layer: 0
+  m_Name: AuditManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &518447971
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518447970}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.6535423, y: 0.6331997, z: 1.3379911}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1098569269}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &518447972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518447970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a70bd3bb92ab94cb6c54084bb5b547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  auditTimeline:
+  - deadlineRound: 5
+    coinCost: 100
+    targetProsperity: 0
+    maxAnger: 50
+    minPopulation: 100
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,6 +2193,7 @@ Transform:
   - {fileID: 1222534420}
   - {fileID: 740020406}
   - {fileID: 1878945963964873708}
+  - {fileID: 518447971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1136786247 stripped

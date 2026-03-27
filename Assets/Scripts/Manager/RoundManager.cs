@@ -48,7 +48,6 @@ public class RoundManager : MonoBehaviour
                 for (int i = 0; i < 8; i++)
                 {
                     Vector3Int neighborPos = new Vector3Int(entity.gridX + dx[i], entity.gridY + dy[i], 0);
-
                     if (BuildManager.Instance.buildingGridMap.TryGetValue(neighborPos, out BuildingEntity neighbor))
                     {
                         if (neighbor.data != null && !neighbor.data.isHarvester)
@@ -72,7 +71,6 @@ public class RoundManager : MonoBehaviour
         GameManager.Instance.AddProsperity(roundProsperity);
         GameManager.Instance.AddPersonAnger(roundAnger);
 
-        int nextRound = GameManager.Instance.Rounds + 1;
-        GameManager.Instance.SetRounds(nextRound);
+        GameManager.Instance.SetRounds(GameManager.Instance.Rounds + 1);
     }
 }
