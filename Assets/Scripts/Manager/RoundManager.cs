@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RoundManager : MonoBehaviour
 {
     public static RoundManager Instance { get; private set; }
+
+    [Header("回合事件")]
+    public UnityEvent onNextRoundRequested;
 
     private readonly int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
     private readonly int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
@@ -10,14 +14,34 @@ public class RoundManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+
+        if (onNextRoundRequested == null)
+        {
+            onNextRoundRequested = new UnityEvent();
+        }
+        onNextRoundRequested.AddListener(ExecuteNextRound);
+    }
+
+    private void OnDestroy()
+    {
+        if (onNextRoundRequested != null)
+        {
+            onNextRoundRequested.RemoveListener(ExecuteNextRound);
+        }
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            ExecuteNextRound();
+            RequestNextRound();
         }
+    }
+
+    // 供 UI Button 的 OnClick 直接绑定调用
+    public void RequestNextRound()
+    {
+        onNextRoundRequested?.Invoke();
     }
 
     public void ExecuteNextRound()

@@ -25,7 +25,39 @@ public class BuildManager : MonoBehaviour
             }
         }
     }
+    private void Start()
+    {
+        BuildingEntity[] prePlacedBuildings = FindObjectsOfType<BuildingEntity>();
+        GridDetector detector = FindObjectOfType<GridDetector>(); // 确保你能拿到网格组件
 
+        foreach (var entity in prePlacedBuildings)
+        {
+            if (!activeBuildings.Contains(entity))
+            {
+                Debug.Log(entity.name);
+                activeBuildings.Add(entity);
+
+                // 绝对不要相信你在 Inspector 里手敲的数字！
+                // 直接拿皇宫真实的 Transform 世界坐标，逆向算出它在网格里的精准 Cell 坐标
+                Vector3Int exactPos = Vector3Int.zero;
+
+                if (detector != null && detector.mapGrid != null)
+                {
+                    exactPos = detector.mapGrid.WorldToCell(entity.transform.position);
+                    // 顺手把正确的坐标回写给实体，防止以后别的逻辑取用时读到脏数据
+                    entity.gridX = exactPos.x;
+                    entity.gridY = exactPos.y;
+                }
+                else
+                {
+                    Debug.LogError("找不到 GridDetector，皇宫坐标初始化失败！");
+                }
+
+                RegisterBuilding(exactPos, entity);
+                Debug.Log($"<color=green>[初始化装载]</color> 皇宫世界坐标: {entity.transform.position} -> 被强行映射到了网格 Key: {exactPos}");
+            }
+        }
+    }
     public bool HasEnoughResources(int typeId)
     {
         if (!bDict.ContainsKey(typeId)) return false;
@@ -82,16 +114,36 @@ public class BuildManager : MonoBehaviour
         return null;
     }
 
-    public void RegisterBuilding(Vector3Int pos, BuildingEntity entity)
+    public void RegisterBuilding(Vector3Int startPos, BuildingEntity entity)
     {
-        buildingGridMap[pos] = entity;
+        int width = entity.data != null ? entity.data.size.x : 1;
+        int height = entity.data != null ? entity.data.size.y : 1;
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector3Int pos = new Vector3Int(startPos.x + i, startPos.y + j, 0);
+                buildingGridMap[pos] = entity;
+            }
+        }
     }
 
-    public void UnregisterBuilding(Vector3Int pos)
+    public void UnregisterBuilding(Vector3Int startPos, BuildingEntity entity)
     {
-        if (buildingGridMap.ContainsKey(pos))
+        int width = entity.data != null ? entity.data.size.x : 1;
+        int height = entity.data != null ? entity.data.size.y : 1;
+
+        for (int i = 0; i < width; i++)
         {
-            buildingGridMap.Remove(pos);
+            for (int j = 0; j < height; j++)
+            {
+                Vector3Int pos = new Vector3Int(startPos.x + i, startPos.y + j, 0);
+                if (buildingGridMap.ContainsKey(pos))
+                {
+                    buildingGridMap.Remove(pos);
+                }
+            }
         }
     }
 }

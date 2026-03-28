@@ -6,6 +6,7 @@ public class BuildingInteractManager : MonoBehaviour
     public static BuildingInteractManager Instance { get; private set; }
 
     public event Action<BuildingEntity> OnBuildingSelected;
+    public event Action<BuildingEntity> OnCoreBuildingSelected;
     public event Action OnSelectionCleared;
 
     private BuildingEntity currentTarget;
@@ -32,12 +33,19 @@ public class BuildingInteractManager : MonoBehaviour
             if (gridDetector == null) return;
 
             Vector3Int cellPos = gridDetector.mapGrid.WorldToCell(mousePos);
-
+            Debug.Log($"<color=orange>[右键寻址]</color> 鼠标世界坐标: {mousePos} -> 算出的查询 Key: {cellPos}");
             if (BuildManager.Instance.buildingGridMap.TryGetValue(cellPos, out BuildingEntity entity))
             {
                 currentTarget = entity;
-                OnBuildingSelected?.Invoke(currentTarget);
-                Debug.Log($"[寻址成功] 已锁定建筑，坐标: {cellPos}，当前可按 U 升级或 X 拆除");
+                if (entity.data != null && entity.data.isCoreBuilding)
+                {
+                    OnCoreBuildingSelected?.Invoke(currentTarget);
+                    // Debug.Log("???");
+                }
+                else if (entity.data != null)
+                {
+                    OnBuildingSelected?.Invoke(currentTarget);
+                }
             }
             else
             {
@@ -85,7 +93,7 @@ public class BuildingInteractManager : MonoBehaviour
             Vector3Int cellPos = new Vector3Int(currentTarget.gridX, currentTarget.gridY, 0);
 
             BuildManager.Instance.activeBuildings.Remove(currentTarget);
-            BuildManager.Instance.UnregisterBuilding(cellPos);
+            BuildManager.Instance.UnregisterBuilding(cellPos, currentTarget);
             Destroy(currentTarget.gameObject);
 
             GameObject clone = Instantiate(nextData.prefab, pos, Quaternion.identity);
@@ -108,20 +116,34 @@ public class BuildingInteractManager : MonoBehaviour
     {
         if (currentTarget == null) return;
 
+        if (currentTarget.data != null && currentTarget.data.isCoreBuilding)
+        {
+            Debug.LogWarning("核心建筑，绝对禁止拆除");
+            return;
+        }
+
         GameManager.Instance.AddCoins(currentTarget.data.refundCoins);
         GameManager.Instance.AddPopulation(currentTarget.data.refundPopulation);
         GameManager.Instance.AddMaterials(currentTarget.data.refundMaterial);
 
         Vector3Int cellPos = new Vector3Int(currentTarget.gridX, currentTarget.gridY, 0);
+        int w = currentTarget.data != null ? currentTarget.data.size.x : 1;
+        int h = currentTarget.data != null ? currentTarget.data.size.y : 1;
 
         BuildManager.Instance.activeBuildings.Remove(currentTarget);
-        BuildManager.Instance.UnregisterBuilding(cellPos);
+        BuildManager.Instance.UnregisterBuilding(cellPos, currentTarget);
 
         if (gridDetector != null)
         {
-            int arrayX = cellPos.x + 500;
-            int arrayY = cellPos.y + 500;
-            gridDetector.gridState[arrayX, arrayY] = 1;
+            for (int i = 0; i < w; i++)
+            {
+                for (int j = 0; j < h; j++)
+                {
+                    int arrayX = cellPos.x + i + 500;
+                    int arrayY = cellPos.y + j + 500;
+                    gridDetector.gridState[arrayX, arrayY] = 1;
+                }
+            }
         }
 
         Destroy(currentTarget.gameObject);

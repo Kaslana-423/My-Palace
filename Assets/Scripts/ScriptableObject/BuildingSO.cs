@@ -7,6 +7,8 @@ public class BuildingSO : ScriptableObject
     public int typeId;
     public string buildingName;
     public int level;
+    public bool isCoreBuilding;
+    public Vector2Int size = new Vector2Int(1, 1);
     [Header("建造消耗")]
     public int costCoins;
     public int costPopulation;

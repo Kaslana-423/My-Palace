@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0403e7e6c83f4e1408d4239d3cf096d4, type: 3}
+  m_Name: HuangGong2
+  m_EditorClassIdentifier: 
+  typeId: 10002
+  buildingName: "\u8D77\u9619"
+  level: 2
+  isCoreBuilding: 1
+  size: {x: 2, y: 2}
+  costCoins: 0
+  costPopulation: 0
+  costMaterial: 0
+  spendPopulation: 0
+  outputCoins: 0
+  outputPopulation: 0
+  outputMaterial: 0
+  outputProsperity: 0
+  outputPersonAnger: 0
+  harvestMultiplier: 0
+  isHarvester: 0
+  prefab: {fileID: 2848007919429054518, guid: f2e5346aa10e2934da60cfb76eb0466e, type: 3}
+  nextLevelSO: {fileID: 11400000, guid: 4d9829613d5ea0d438b84a9ea5f2e04b, type: 2}
+  refundCoins: 0
+  refundPopulation: 0
+  refundMaterial: 0
+  previewSprite: {fileID: 21300000, guid: 0fa00820af6e3b748a780c2df7687013, type: 3}
+  buildingTitle: "\u8D77\u9619"
+  buildingIntro: "\u9AD8\u5899\u5408\u56F4\uFF0C\u53CC\u9619\u51CC\u4E91\u3002\u5BAB\u57CE\u620D\u536B\u5DF2\u5907\uFF0C\u7EA2\u5899\u9752\u74E6\u521D\u663E\u5929\u5BB6\u5A01\u4EEA\u3002\u671D\u5802\u6CD5\u5EA6\u6E10\u7ACB\uFF0C\u5F15\u4E5D\u5DDE\u5BA2\u5546\u3001\u56DB\u65B9\u4F7F\u8282\u671B\u9619\u800C\u62DC\uFF0C\u521D\u73B0\u5927\u56FD\u6C14\u8C61\u3002"
+  buildingIcon: {fileID: 21300000, guid: 46e8c29ffb067af409bff92b95d187e6, type: 3}
