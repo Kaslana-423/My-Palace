@@ -30,17 +30,37 @@ public class BuildingInteractManager : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0f;
 
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+            Collider2D hitCollider = Physics2D.OverlapPoint(mousePos2D);
+
+            if (hitCollider != null)
+            {
+                BuildingEntity hitEntity = hitCollider.GetComponentInParent<BuildingEntity>();
+                if (hitEntity != null)
+                {
+                    currentTarget = hitEntity;
+                    if (hitEntity.data != null && hitEntity.data.isCoreBuilding)
+                    {
+                        OnCoreBuildingSelected?.Invoke(currentTarget);
+                    }
+                    else if (hitEntity.data != null)
+                    {
+                        OnBuildingSelected?.Invoke(currentTarget);
+                    }
+                    return;
+                }
+            }
+
             if (gridDetector == null) return;
 
             Vector3Int cellPos = gridDetector.mapGrid.WorldToCell(mousePos);
-            Debug.Log($"<color=orange>[右键寻址]</color> 鼠标世界坐标: {mousePos} -> 算出的查询 Key: {cellPos}");
+
             if (BuildManager.Instance.buildingGridMap.TryGetValue(cellPos, out BuildingEntity entity))
             {
                 currentTarget = entity;
                 if (entity.data != null && entity.data.isCoreBuilding)
                 {
                     OnCoreBuildingSelected?.Invoke(currentTarget);
-                    // Debug.Log("???");
                 }
                 else if (entity.data != null)
                 {
@@ -84,6 +104,16 @@ public class BuildingInteractManager : MonoBehaviour
     {
         if (currentTarget == null) return;
 
+        if (currentTarget.data != null && currentTarget.data.isCoreBuilding)
+        {
+            if (PalaceManager.Instance != null && PalaceManager.Instance.TryUpgradeCoreBuilding(currentTarget))
+            {
+                currentTarget = PalaceManager.Instance.palaceStages[PalaceManager.Instance.currentStageIndex];
+                OnCoreBuildingSelected?.Invoke(currentTarget);
+            }
+            return;
+        }
+
         BuildingSO nextData = currentTarget.data.nextLevelSO;
         if (nextData == null) return;
 
@@ -104,8 +134,6 @@ public class BuildingInteractManager : MonoBehaviour
 
             BuildManager.Instance.activeBuildings.Add(newEntity);
             BuildManager.Instance.RegisterBuilding(cellPos, newEntity);
-
-            // ClearSelection();
 
             currentTarget = newEntity;
             OnBuildingSelected?.Invoke(currentTarget);
@@ -148,5 +176,15 @@ public class BuildingInteractManager : MonoBehaviour
 
         Destroy(currentTarget.gameObject);
         ClearSelection();
+    }
+    // 强行暴露给 UI 用来同步的内存指针
+    public BuildingEntity GetCurrentTarget()
+    {
+        return currentTarget;
+    }
+
+    public void ForceSetTarget(BuildingEntity target)
+    {
+        currentTarget = target;
     }
 }

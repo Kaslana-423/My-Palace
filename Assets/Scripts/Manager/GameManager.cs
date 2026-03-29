@@ -150,6 +150,18 @@ public class GameManager : MonoBehaviour
         prosperity = clamped;
         ProsperityChanged?.Invoke(prosperity);
     }
+    public bool TryExchangeProsperity(int coin, int pop)
+    {
+        if (coin < 0 || pop < 0) return false;
+        if (coins >= coin && population >= pop)
+        {
+            SetCoins(coins - coin);
+            SetPopulation(population - pop);
+            AddProsperity(coin + pop);
+            return true;
+        }
+        return false;
+    }
 
     // --- 轮数逻辑 ---
     public void SetRounds(int value)

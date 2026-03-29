@@ -13,6 +13,8 @@ public class BuildingSO : ScriptableObject
     public int costCoins;
     public int costPopulation;
     public int costMaterial;
+    [Header("升级/建造门槛（不消耗）")]
+    public int requiredProsperity;
     [Header("回合信息")]
     public int spendPopulation;
     public int outputCoins;

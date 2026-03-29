@@ -16,10 +16,11 @@ MonoBehaviour:
   buildingName: "\u5EFA\u6781"
   level: 3
   isCoreBuilding: 1
-  size: {x: 2, y: 2}
-  costCoins: 0
+  size: {x: 1, y: 1}
+  costCoins: 1
   costPopulation: 0
   costMaterial: 0
+  requiredProsperity: 0
   spendPopulation: 0
   outputCoins: 0
   outputPopulation: 0

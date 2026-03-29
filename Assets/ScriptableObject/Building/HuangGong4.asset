@@ -16,7 +16,7 @@ MonoBehaviour:
   buildingName: "\u7D2B\u5FAE"
   level: 4
   isCoreBuilding: 1
-  size: {x: 3, y: 3}
+  size: {x: 1, y: 1}
   costCoins: 0
   costPopulation: 0
   costMaterial: 0
