@@ -56,6 +56,7 @@ public class BuildingPanelUI : MonoBehaviour
         if (buildingNameText != null) buildingNameText.text = data.buildingTitle;
         if (buildingIntroText != null) buildingIntroText.text = data.buildingIntro;
         if (buildingImage != null && data.buildingIcon != null) buildingImage.sprite = data.buildingIcon;
+        buildingImage.SetNativeSize();
 
         // 升级消耗
         BuildingSO nextData = data.nextLevelSO;
