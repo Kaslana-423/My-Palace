@@ -49,4 +49,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cb91bd96d1742404ca501a3702731b20, type: 2}
   - {fileID: 11400000, guid: f1c3c637c36f26b4a82cc37ac65107d2, type: 2}
   - {fileID: 11400000, guid: 1d7b9fa250422ce41ae63e4e2906d770, type: 2}
-  uiManager: {fileID: 0}
+  uiManager: {fileID: 7007009157308118051, guid: be51ce207fda8b740a9285d9810c2cc9, type: 3}
